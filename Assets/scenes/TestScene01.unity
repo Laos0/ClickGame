@@ -156,6 +156,11 @@ Prefab:
       propertyPath: m_Name
       value: Cube (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114155239786200164, guid: ca0bab0fd1de0974c9b0436fe12f7888,
+        type: 2}
+      propertyPath: scoreTxt
+      value: 
+      objectReference: {fileID: 639512500}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca0bab0fd1de0974c9b0436fe12f7888, type: 2}
   m_IsPrefabParent: 0
@@ -302,6 +307,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6e3ee6715296da348817dbab3afaf804, type: 2}
+    - target: {fileID: 114155239786200164, guid: ca0bab0fd1de0974c9b0436fe12f7888,
+        type: 2}
+      propertyPath: scoreTxt
+      value: 
+      objectReference: {fileID: 639512500}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca0bab0fd1de0974c9b0436fe12f7888, type: 2}
   m_IsPrefabParent: 0
@@ -554,6 +564,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114155239786200164, guid: ca0bab0fd1de0974c9b0436fe12f7888,
+        type: 2}
+      propertyPath: scoreTxt
+      value: 
+      objectReference: {fileID: 639512500}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca0bab0fd1de0974c9b0436fe12f7888, type: 2}
   m_IsPrefabParent: 0
