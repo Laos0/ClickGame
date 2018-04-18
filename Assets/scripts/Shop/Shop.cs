@@ -28,7 +28,8 @@ public class Shop : MonoBehaviour {
     public void buyAutominer() {
         ShopItems[0].purchase();
         //ShopItemButtons[0].GetComponent<UnityEngine.UI.Text>().text = "Test";
-        
+        if (Currency.spendMoney(ShopItems[0].getPrice()))
+        autoclickValue += ShopItems[0].getClicks();
     }
 
 }

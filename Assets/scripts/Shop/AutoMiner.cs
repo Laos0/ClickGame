@@ -9,5 +9,6 @@ public class AutoMiner : ShopItem {
         // Initialize member variables
         numberOwned = 0;
         price = 25;
+        clicksPerTick = 1;
     }
 }
