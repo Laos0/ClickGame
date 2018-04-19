@@ -15,20 +15,20 @@ public class ShopItem {
     // This shop item's UI image
     protected Sprite shopIcon;
 
+    protected string name;
+
     // How much the price increases when an item is purchased
     public float scaleValue;
 
     // Attempt to purchase another one of this item
     public void purchase()
     {
-        // Check whether the player has enough funds
-        if (true)
-        {
-            // Subtract funds from the player's wallet
-            // --TODO--
-            // Add one of this item
-            numberOwned++;
-        }
+        // Increase the number owned by one
+        numberOwned++;
+        // Increase the price
+        increasePrice();
+
+        Debug.Log("New Price: " + price.ToString());
     }
 
     // Return the number of items of this type the player owns
@@ -40,11 +40,11 @@ public class ShopItem {
     {
         // Scale the price by a fixed value
         // Value is floored and converted to an int
-        price *= (int)Mathf.Floor(1.2f);
+        price = (int)Mathf.Floor(1.2f * price);
     }
 
     // Returns whether or not the player has enough points to unlock this item in the shop
-    bool checkThreshold()
+    public bool passedThreshold()
     {
         // Check whether the player has enough points to unlock this item in the shop
         return (Currency.counter >= threshold);
@@ -54,8 +54,13 @@ public class ShopItem {
     public int getClicks() { return clicksPerTick; }
 
     // Get the price
-    public int getPrice()
-    {
-        return price;
-    }
+    public int getPrice() { return price; }
+
+    // Get the number of this item the player owns
+    public int getCount () { return numberOwned; }
+
+    // Get the item's name
+    public string getName () { return name; }
+
+    
 }
