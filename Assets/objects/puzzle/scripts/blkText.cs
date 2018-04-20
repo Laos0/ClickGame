@@ -16,6 +16,6 @@ public class blkText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Get count from blkCount
-		textCount = blkCount.GetComponent().count;
+		//textCount = blkCount.GetComponent().count;  <-- GetComponent is a template function. Need to do GetComponent<Component you need>().count;
 	}
 }

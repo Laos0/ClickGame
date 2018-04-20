@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: ffc860bd750e294499ee6d1c5efaa82b
 timeCreated: 1524058974
 licenseType: Free
+=======
+guid: 9927a0e62196edf488df59de3a39c68c
+timeCreated: 1524059031
+>>>>>>> Stashed changes
 TextScriptImporter:
   externalObjects: {}
   userData: 

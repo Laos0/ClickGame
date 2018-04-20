@@ -6,15 +6,19 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 
-    // The number of clicks needed to break this block
-    protected int clicksNeeded;
-    // The number of points the player gets for breaking this block
-    protected int reward;
+    protected int clicksNeeded;  // The number of clicks needed to break this block
+    
+    protected int reward;  // The number of points the player gets for breaking this block
+
+    Block(int clicks, int reward)
+    {
+        this.clicksNeeded = clicks;
+        this.reward = reward; 
+    }
 
     // Use this for initialization
     void Start () {
-        clicksNeeded = 20;
-        reward = 50;
+
 	}
 	
 	// Update is called once per frame
@@ -25,4 +29,6 @@ public class Block : MonoBehaviour {
     // Getters
     public int getReward() { return reward; }
     public int getClicksNeeded() { return clicksNeeded; }
+    public void setReward(int reward) { this.reward = reward; }
+    public void setClicks(int clicks) { this.clicksNeeded = clicks; }
 }

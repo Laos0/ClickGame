@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour {
 
-    public List<GameObject> blocks = new List<GameObject>();
-    public GameObject genStart, genNext;
+    private List<GameObject> blocks = new List<GameObject>();
+    private GameObject genStart, genNext;
 
     int rows = 0, col = 0; 
 	// Use this for initialization
@@ -44,28 +44,6 @@ public class Generator : MonoBehaviour {
             }
         }
     }
-
-    Color getRandomColor()
-    {
-        System.Random rand = new System.Random();
-        int color = rand.Next(0, 4);
-
-        switch (color)
-        {
-            case 0:
-                return Color.green;
-            case 1:
-                return Color.blue;
-            case 2:
-                return Color.red;
-            case 3:
-                return Color.gray;
-            case 4:
-                return Color.magenta;
-            default:
-                return Color.white;
-        }
-    }
    
     void genGrid() {
         genStart = GameObject.FindGameObjectWithTag("Gen_Start");
@@ -89,6 +67,27 @@ public class Generator : MonoBehaviour {
                 genNext.transform.position = new Vector3(genNext.transform.position.x - (0.25F * 10), genNext.transform.position.y - 0.25F, 0);
 
             }
+        }
+    }
+
+    Color getRandomColor()
+    {
+        int color = Random.Range(0, 4);
+
+        switch (color)
+        {
+            case 0:
+                return Color.green;
+            case 1:
+                return Color.blue;
+            case 2:
+                return Color.red;
+            case 3:
+                return Color.gray;
+            case 4:
+                return Color.magenta;
+            default:
+                return Color.white;
         }
     }
 }
