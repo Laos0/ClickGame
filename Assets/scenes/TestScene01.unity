@@ -140,9 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49c1473d92058c43a3b950ecfb9c1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocks: []
-  genStart: {fileID: 0}
-  genNext: {fileID: 0}
+  block: {fileID: 1280357235595630, guid: f13134f5b7dfc1b48889082580a66c1c, type: 2}
 --- !u!4 &98793651
 Transform:
   m_ObjectHideFlags: 0

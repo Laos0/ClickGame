@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Generator : MonoBehaviour {
+    public GameObject block;
 
     private List<GameObject> blocks = new List<GameObject>();
     private GameObject genStart, genNext;
@@ -10,6 +11,7 @@ public class Generator : MonoBehaviour {
     int rows = 0, col = 0; 
 	// Use this for initialization
 	void Start () {
+        block = Resources.Load("Block") as GameObject;
         genGrid();
 	}
 	
@@ -26,11 +28,11 @@ public class Generator : MonoBehaviour {
 
         for (int i = 0; i < 50; i++)
         {
+            blocks.Add(Instantiate(block));
 
-            blocks.Add(GameObject.CreatePrimitive(PrimitiveType.Cube));
             blocks[blocks.Count - 1].transform.position = genNext.transform.position;
             blocks[blocks.Count - 1].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
-            blocks[blocks.Count - 1].GetComponent<Renderer>().material.color = getRandomColor();
+            blocks[blocks.Count - 1].GetComponent<Renderer>().material.color = getRandomColor(); 
 
             genNext.transform.position += new Vector3(0.25F, 0, 0);
 
@@ -51,7 +53,7 @@ public class Generator : MonoBehaviour {
 
         for(int i = 0; i < 100; i++) {
 
-            blocks.Add(GameObject.CreatePrimitive(PrimitiveType.Cube));
+            blocks.Add(Instantiate(block));
             blocks[i].transform.position = genNext.transform.position;
             blocks[i].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
 

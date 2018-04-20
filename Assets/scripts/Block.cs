@@ -18,7 +18,8 @@ public class Block : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        clicksNeeded = 10;
+        reward = 50;
 	}
 	
 	// Update is called once per frame
@@ -31,4 +32,10 @@ public class Block : MonoBehaviour {
     public int getClicksNeeded() { return clicksNeeded; }
     public void setReward(int reward) { this.reward = reward; }
     public void setClicks(int clicks) { this.clicksNeeded = clicks; }
+
+    void OnMouseDown()
+    {
+        clicksNeeded--;
+        Debug.Log(clicksNeeded);
+    }
 }
