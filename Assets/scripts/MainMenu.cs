@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void StartGame(){
+        MainGameManager.Instance.startCurrencyCounter();
 		Application.LoadLevel (1);
 	}
 

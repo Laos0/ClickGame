@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 65423889786930338}
   - component: {fileID: 23446429903328142}
   - component: {fileID: 114155239786200164}
-  - component: {fileID: 82964015363355196}
   - component: {fileID: 114982851799928650}
+  - component: {fileID: 114011744133699198}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -98,86 +98,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!82 &82964015363355196
-AudioSource:
+--- !u!114 &114011744133699198
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1255614865242692}
   m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5fe53c20bece2c64795f1e59d2f137cf, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa58f1acf8c1a74499be88cedff0a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114155239786200164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a4a1242b9b7ea40839fa0acb0dc2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 82964015363355196}
+  audio: {fileID: 0}
   scoreTxt: {fileID: 0}
   counter: 0
 --- !u!114 &114982851799928650

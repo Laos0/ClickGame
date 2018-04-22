@@ -20,8 +20,8 @@ public class TestScript : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		//Debug.Log ("Clicked");
-		audio.Play ();
+        //Debug.Log ("Clicked");
+        SoundManager.Instance.playBlockSound();
 		counter++;
 		scoreTxt.text = "" + counter;
 

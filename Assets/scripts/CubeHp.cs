@@ -19,6 +19,7 @@ public class CubeHp : MonoBehaviour {
 	void OnMouseDown(){
 		hp--;
 		if (hp == 0) {
+            SoundManager.Instance.playBlockSound();
 			Destroy (gameObject);
 		}
 	}
