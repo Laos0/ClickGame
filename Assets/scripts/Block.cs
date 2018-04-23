@@ -10,21 +10,35 @@ public class Block : MonoBehaviour {
     
     protected int reward;  // The number of points the player gets for breaking this block
 
+    public float multiplier;
+
+    public Transform location;
+    public bool isClick;
+    public bool selected; 
+
     Block(int clicks, int reward)
     {
         this.clicksNeeded = clicks;
-        this.reward = reward; 
+        this.reward = reward;
+        this.multiplier = 1;
     }
 
     // Use this for initialization
     void Start () {
         clicksNeeded = 10;
         reward = 50;
+        multiplier = 1;
+        location = this.transform;
+        isClick = false;
+        selected = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(clicksNeeded <= 0)
+        {
+            Object.Destroy(gameObject);
+        }
 	}
 
     // Getters
@@ -35,7 +49,13 @@ public class Block : MonoBehaviour {
 
     void OnMouseDown()
     {
-        clicksNeeded--;
+        if(isClick)
+        {
+            if(selected)
+            {
+                clicksNeeded--;
+            }
+        }
         Debug.Log(clicksNeeded);
     }
 }

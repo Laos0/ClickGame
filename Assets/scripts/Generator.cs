@@ -74,22 +74,13 @@ public class Generator : MonoBehaviour {
 
     Color getRandomColor()
     {
-        int color = Random.Range(0, 4);
+        int color = Random.Range(-1, 101);
 
-        switch (color)
-        {
-            case 0:
-                return Color.green;
-            case 1:
-                return Color.blue;
-            case 2:
-                return Color.red;
-            case 3:
-                return Color.gray;
-            case 4:
-                return Color.magenta;
-            default:
-                return Color.white;
-        }
+        if (color <= 40) { return Color.green; }
+        else if (color > 40 && color < 60) { return Color.blue; }
+        else if (color > 60 && color < 80) { return Color.red; }
+        else if (color > 80 && color < 90) { return Color.gray; }
+        else if (color >= 90) { return Color.magenta; }
+        else { return Color.white; }
     }
 }
