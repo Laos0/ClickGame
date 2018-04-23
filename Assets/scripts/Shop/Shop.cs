@@ -12,7 +12,7 @@ public class Shop : MonoBehaviour {
 
     // The total number of clicks that occur per tick
     int autoclickValue;
-    public Currency Currency = new Currency();
+
     // The number of shop items the player has unlocked
     // Not sure if I'm gonna use this or some other method, so just wait
     int itemsUnlocked;
@@ -26,10 +26,10 @@ public class Shop : MonoBehaviour {
         // AutoMiner
         ShopItems.Add(new AutoMiner());
         // IndustrialDrill
-        //ShopItems.Add(new IndustrialDrill());
+        ShopItems.Add(new IndustrialDrill());
 
         // Explosives
-        //ShopItems.Add(new Explosives());
+        ShopItems.Add(new Explosives());
 
         // Initialize 
         updateButtonText(0);

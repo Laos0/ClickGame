@@ -47,7 +47,7 @@ public class ShopItem {
     public bool passedThreshold()
     {
         // Check whether the player has enough points to unlock this item in the shop
-        return false;//(Currency.counter >= threshold);
+        return (Currency.counter >= threshold);
     }
 
     // Return the number of clicks per tick that this item generates
