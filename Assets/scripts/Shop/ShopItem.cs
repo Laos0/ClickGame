@@ -20,6 +20,9 @@ public class ShopItem {
     // How much the price increases when an item is purchased
     public float scaleValue;
 
+    // Reference to the MGM
+    MainGameManager MGM;
+
     // Attempt to purchase another one of this item
     public void purchase()
     {
@@ -47,7 +50,7 @@ public class ShopItem {
     public bool passedThreshold()
     {
         // Check whether the player has enough points to unlock this item in the shop
-        return (Currency.counter >= threshold);
+        return (MGM.getCurrency() >= threshold);
     }
 
     // Return the number of clicks per tick that this item generates
@@ -57,10 +60,16 @@ public class ShopItem {
     public int getPrice() { return price; }
 
     // Get the number of this item the player owns
-    public int getCount () { return numberOwned; }
+    public int getCount() { return numberOwned; }
 
     // Get the item's name
-    public string getName () { return name; }
+    public string getName() { return name; }
 
-    
+
+    // Set the reference to the MGM
+    public void setMGM(MainGameManager newMGM)
+    {
+        newMGM = newMGM;
+
+    }
 }

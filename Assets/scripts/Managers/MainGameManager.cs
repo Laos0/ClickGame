@@ -89,10 +89,7 @@ public class MainGameManager : Singleton<MainGameManager> {
     }
 
     
-
- 
-
-
-
+    // Return the current currency value
+    public int getCurrency () { return currency; }
 }
 
