@@ -20,6 +20,8 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     public List<Block> grid;
 
+    public bool blockSelected;
+
     void Awake()
     {
         if (!created)
@@ -37,6 +39,25 @@ public class MainGameManager : Singleton<MainGameManager> {
         {
             startCurrencyCounter();
             counterStarted = true;
+        }
+
+        for(int i = 0; i < grid.Count; i++)
+        {
+            if(grid[i].selected)
+            {
+                blockSelected = true;
+            }
+        }
+
+        if(blockSelected)
+        {
+            for (int i = 0; i < grid.Count; i++)
+            {
+                if(!grid[i].selected)
+                {
+                    grid[i].isClick = false;
+                }
+            }
         }
     }
 
