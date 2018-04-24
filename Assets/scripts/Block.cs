@@ -7,14 +7,13 @@ using UnityEngine;
 public class Block : MonoBehaviour {
 
     protected int clicksNeeded;  // The number of clicks needed to break this block
-    
     protected int reward;  // The number of points the player gets for breaking this block
-
     public float multiplier;
-
-    public Transform location;
+    public int xCord, yCord;
     public bool isClick;
-    public bool selected; 
+    public bool selected;
+    public Color color;
+    public Block nextBlock;
 
     Block(int clicks, int reward)
     {
@@ -25,19 +24,31 @@ public class Block : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        clicksNeeded = 10;
+        clicksNeeded = 50;
         reward = 50;
         multiplier = 1;
-        location = this.transform;
-        isClick = false;
         selected = false;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if(clicksNeeded <= 0)
         {
             Object.Destroy(gameObject);
+            GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(this.reward);
+            GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
+        }
+
+        if(selected)
+        {
+            this.GetComponent<Outline>().enabled = true;
+            this.GetComponent<Renderer>().material.color = color;
+
+        }
+        else
+        {
+            this.GetComponent<Outline>().enabled = false;
+            this.GetComponent<Renderer>().material.color = color;
         }
 	}
 
@@ -49,13 +60,32 @@ public class Block : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if(isClick)
+        Debug.Log("CLICK");
+
+        if (isClick) 
         {
-            if(selected)
+            if(!selected)
             {
-                clicksNeeded--;
+                selected = true;
+                GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = this;
+            }
+            else
+            {
+                this.clicksNeeded--;
+                GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(1 * (int)this.multiplier);
             }
         }
+    }
+
+    public void hit()
+    {
+        clicksNeeded -= 1 * (int)this.multiplier;
         Debug.Log(clicksNeeded);
+        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(1 * (int)this.multiplier);
+    }
+
+    public Vector2 getLocation()
+    {
+        return new Vector2(xCord, yCord);
     }
 }

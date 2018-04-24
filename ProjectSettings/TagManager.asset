@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Gen_Start
   - RootCanvas
+  - Block
+  - GM
   layers:
   - Default
   - TransparentFX
