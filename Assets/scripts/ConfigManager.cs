@@ -11,6 +11,12 @@ public class ConfigManager {
     // Called when the game is started.  Loads the config file
     public static void loadConfig()
     {
+        // Stop if the file has already been loaded
+        if (config != null)
+        {
+            return;
+        }
+
         // Set up the config variable
         config = new Configuration();
 
