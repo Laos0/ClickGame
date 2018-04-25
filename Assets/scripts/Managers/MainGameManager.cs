@@ -12,9 +12,15 @@ public class MainGameManager : Singleton<MainGameManager> {
     public GameObject rootCanvas;
     public Text scoreTxt;
 
-    private int currency;
+    public float currency;
 
-    public bool isGameStart;
+    public bool isGameStart, counterStarted;
+
+    public Block currentBlock;
+
+    public List<Block> grid;
+
+    public bool blockSelected;
 
     void Awake()
     {
@@ -27,9 +33,32 @@ public class MainGameManager : Singleton<MainGameManager> {
         }
     }
 
-    private void Start()
+    private void Update()
     {
-        startCurrencyCounter();
+        if (currentBlock != null && !counterStarted)
+        {
+            startCurrencyCounter();
+            counterStarted = true;
+        }
+
+        for(int i = 0; i < grid.Count; i++)
+        {
+            if(grid[i].selected)
+            {
+                blockSelected = true;
+            }
+        }
+
+        if(blockSelected)
+        {
+            for (int i = 0; i < grid.Count; i++)
+            {
+                if(!grid[i].selected)
+                {
+                    grid[i].isClick = false;
+                }
+            }
+        }
     }
 
     public void startCurrencyCounter()
@@ -43,8 +72,15 @@ public class MainGameManager : Singleton<MainGameManager> {
         while (isGameStart)
         {
             // Debug.Log("OnCoroutine: " + (int)Time.time);
-            addToCurrency(1);
-            yield return new WaitForSeconds(1f);
+            if (currentBlock != null)
+            {
+                currentBlock.hit();
+                yield return new WaitForSeconds(1);
+            }
+            else
+            {
+               //wait for next selection
+            }
         }
     }
 
@@ -88,8 +124,28 @@ public class MainGameManager : Singleton<MainGameManager> {
         updateCurrencyUI();
     }
 
+    public Block getNextBlock()
+    {
+        Vector2 currentLocation = new Vector2(currentBlock.xCord, currentBlock.yCord);
+        if(currentLocation.x < 9)
+        {
+            currentLocation.y++;
+        }
+
+        for(int i = 0; i < grid.Capacity; i++)
+        {
+            if (currentLocation == grid[i].getLocation())
+            {
+                grid[i].isClick = true;
+                grid[i].selected = true;
+                return grid[i];
+            }
+        }
+
+        return null;
+    }
     
     // Return the current currency value
-    public int getCurrency () { return currency; }
+    public float getCurrency () { return currency; }
 }
 

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49c1473d92058c43a3b950ecfb9c1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 1280357235595630, guid: f13134f5b7dfc1b48889082580a66c1c, type: 2}
+  block: {fileID: 0}
 --- !u!4 &98793651
 Transform:
   m_ObjectHideFlags: 0
@@ -282,7 +282,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 192098821}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 1.5, z: 2}
+  m_LocalPosition: {x: -1.02, y: 0.68, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 98793651}
@@ -571,6 +571,10 @@ Prefab:
       propertyPath: scoreTxt
       value: 
       objectReference: {fileID: 639512500}
+    - target: {fileID: 1026515002216526, guid: a6dd9a1110096394ba564af1324b66a4, type: 2}
+      propertyPath: m_TagString
+      value: GM
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6dd9a1110096394ba564af1324b66a4, type: 2}
   m_IsPrefabParent: 0
