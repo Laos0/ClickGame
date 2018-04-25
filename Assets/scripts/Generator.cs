@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Generator : MonoBehaviour {
-    public GameObject block;
+    public Block block;
 
-    private List<GameObject> blocks = new List<GameObject>();
+    private List<Block> blocks = new List<Block>();
     private GameObject genStart, genNext;
 
     int rows = 0, col = 0; 
 	// Use this for initialization
 	void Start () {
-        block = Resources.Load("Block") as GameObject;
+        block = Resources.Load("Block", typeof(Block)) as Block;
         genGrid();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 
     void genBlock() {
-        System.Random rand = new System.Random();
 
         genStart = GameObject.FindGameObjectWithTag("Gen_Start");
         genNext = genStart;
@@ -44,6 +43,7 @@ public class Generator : MonoBehaviour {
                 genNext.transform.position = new Vector3(genNext.transform.position.x - (0.25F * 10), genNext.transform.position.y - 0.25F, 0);
 
             }
+
         }
     }
    
@@ -52,16 +52,27 @@ public class Generator : MonoBehaviour {
         genNext = genStart;
 
         for(int i = 0; i < 100; i++) {
-
-            blocks.Add(Instantiate(block));
+            int x = 0;
+            blocks.Add(Object.Instantiate(block));
             blocks[i].transform.position = genNext.transform.position;
             blocks[i].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
 
             blocks[i].GetComponent<Renderer>().material.color = getRandomColor();
-
+            blocks[i].color = blocks[i].GetComponent<Renderer>().material.color;
             genNext.transform.position += new Vector3(0.25F, 0, 0);
 
+            blocks[i].xCord = rows;
+            blocks[i].yCord = col;
+
             col++;
+            if(i < 10)
+            {
+                blocks[i].isClick = true;
+            }
+            else
+            {
+                blocks[i].isClick = false;
+            }
             if (col == 10)
             {
                 rows++;
@@ -70,6 +81,7 @@ public class Generator : MonoBehaviour {
 
             }
         }
+        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = blocks;
     }
 
     Color getRandomColor()

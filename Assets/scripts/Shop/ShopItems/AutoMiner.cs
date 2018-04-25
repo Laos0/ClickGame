@@ -10,5 +10,6 @@ public class AutoMiner : ShopItem {
         numberOwned = 0;
         price = 25;
         clicksPerTick = 1;
+        name = "Autominer";
     }
 }

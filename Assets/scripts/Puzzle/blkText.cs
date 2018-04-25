@@ -18,7 +18,7 @@ public class blkText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		blockCount.text = "x" + num;
-		if (time < timeScale)
+		if (time * Time.deltaTime < timeScale)
 			time++;
 		else {
 			num++;
@@ -27,7 +27,8 @@ public class blkText : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		num--;
+		if (num > 0)
+			num--;
 		blockCount.text = "x" + num;
 	}
 }
