@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SharpConfig;
 
 public class Shop : MonoBehaviour {
 
@@ -33,19 +34,46 @@ public class Shop : MonoBehaviour {
 
         // AutoMiner
         ShopItems.Add(new AutoMiner());
+        ShopItems[0].setMGM(MGM);
+        ShopItemButtons[0].GetComponent<ShopItemButton>().initialize(this, 0);
         // IndustrialDrill
         ShopItems.Add(new IndustrialDrill());
+        ShopItems[1].setMGM(MGM);
 
         // Explosives
         ShopItems.Add(new Explosives());
+        ShopItems[2].setMGM(MGM);
 
         // Initialize 
         updateButtonText(0);
-        updateButtonText(1);
 
         newButtonX = ShopItemButtons[0].transform.position.x;
         newButtonY_change = 75;
         newButtonY = ShopItemButtons[0].transform.position.y - newButtonY_change;
+
+        // Load the file
+        for (int i = 1; i < ConfigManager.getItems(); i++)
+        {
+            // Instantiate a new Button
+            GameObject newButton = Instantiate(Resources.Load<GameObject>(ShopItems[i].getName()));
+            ShopItemButtons.Add(newButton.GetComponent<UnityEngine.UI.Button>());
+
+            // Set the new button to be a child of this button
+            newButton.transform.SetParent(this.gameObject.transform);
+
+            newButton.transform.position = new Vector2(newButtonX, newButtonY);
+            newButtonY -= newButtonY_change;
+            newButton.GetComponent<ShopItemButton>().initialize(this, i);
+
+
+            // Set the number of items owned based on the stored value
+            for (int j = 0; j < ConfigManager.getItemsOwned(i); j++)
+            {
+                ShopItems[i].purchase();
+            }
+
+            updateButtonText(i);
+        }
     }
 	
 	// Update is called once per frame
@@ -68,6 +96,9 @@ public class Shop : MonoBehaviour {
 
                 newButton.transform.position = new Vector2(newButtonX, newButtonY);
                 newButtonY -= newButtonY_change;
+                newButton.GetComponent<ShopItemButton>().initialize(this, i);
+
+                updateButtonText(i);
 
                 // Add this shop item to the game
             }
@@ -96,7 +127,7 @@ public class Shop : MonoBehaviour {
     // The separate buy______ functions will call this one, passing in the index for the number they used
     // This is done in this, unusual way because the functions for the buttons are selected from a dropdown menu
     //          By making each buy______ a separate function, I don't need to memorize which item is associated with which index
-    void buyItem(int index)
+    public void buyItem(int index)
     {
         // Check whether the player can afford this item
         if (MGM.getCurrency() >= ShopItems[index].getPrice())
@@ -148,7 +179,10 @@ public class Shop : MonoBehaviour {
     public int getScaledClicks(float dt)
     {
         // Return the number of clicks that would happen in that time
-        return Mathf.FloorToInt(dt * autoclickValue);
+        int value = Mathf.FloorToInt(dt * autoclickValue);
+        Debug.Log("Value: " + value.ToString());
+        return value;
+
     }
 
 }
