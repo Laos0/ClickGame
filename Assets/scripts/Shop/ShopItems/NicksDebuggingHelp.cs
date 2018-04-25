@@ -22,6 +22,6 @@ public class NicksDebuggingHelp : MonoBehaviour {
 	void Update () {
         moneyDisplay.text = MGM_Object.GetComponent<MainGameManager>().getCurrency().ToString();
 
-        MGM_Object.GetComponent<MainGameManager>().addToCurrency(shopObject.GetComponent<Shop>().getScaledClicks(Time.deltaTime));
+        // MGM_Object.GetComponent<MainGameManager>().addToCurrency(shopObject.GetComponent<Shop>().getScaledClicks(Time.deltaTime));
 	}
 }
