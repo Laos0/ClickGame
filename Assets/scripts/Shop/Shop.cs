@@ -6,13 +6,18 @@ public class Shop : MonoBehaviour {
 
     // List of different shop items in the game
     List<ShopItem> ShopItems = new List<ShopItem>();
+    // Reference to the MGM game object
+    public GameObject MGM_Object;
+
+    // MGM class
+    MainGameManager MGM;
 
     // List of UI elements for the different shop items
     public List<UnityEngine.UI.Button> ShopItemButtons = new List<UnityEngine.UI.Button>();
 
     // The total number of clicks that occur per tick
     int autoclickValue;
-    public Currency Currency = new Currency();
+
     // The number of shop items the player has unlocked
     // Not sure if I'm gonna use this or some other method, so just wait
     int itemsUnlocked;
@@ -23,13 +28,16 @@ public class Shop : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        // Get MGM Reference
+        MGM = MGM_Object.GetComponent<MainGameManager>();
+
         // AutoMiner
         ShopItems.Add(new AutoMiner());
         // IndustrialDrill
-        //ShopItems.Add(new IndustrialDrill());
+        ShopItems.Add(new IndustrialDrill());
 
         // Explosives
-        //ShopItems.Add(new Explosives());
+        ShopItems.Add(new Explosives());
 
         // Initialize 
         updateButtonText(0);
@@ -90,8 +98,11 @@ public class Shop : MonoBehaviour {
     //          By making each buy______ a separate function, I don't need to memorize which item is associated with which index
     void buyItem(int index)
     {
-        if (Currency.spendMoney(ShopItems[index].getPrice()))
+        // Check whether the player can afford this item
+        if (MGM.getCurrency() >= ShopItems[index].getPrice())
         {
+            // Subtract this much money from the player's wallet
+            MGM.subToCurrency(ShopItems[index].getPrice());
             // Increase the autoclicker value
             autoclickValue += ShopItems[index].getClicks();
             // Call the shopItem's purchase function (for bookkeeping)
@@ -110,14 +121,14 @@ public class Shop : MonoBehaviour {
             Debug.Log("Can't afford");
         }
 
-        Debug.Log("Currency: " + Currency.counter.ToString());
+        Debug.Log("Currency: " + MGM.getCurrency().ToString());
     }
 
     // Cheat function to add money to the player's currency
     public void addMoney()
     {
         // Add the money
-        Currency.addMoney(100);
+        MGM.addToCurrency(100);
     }
 
     // Add a new item to the shop

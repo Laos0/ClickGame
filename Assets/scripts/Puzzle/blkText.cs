@@ -18,7 +18,7 @@ public class blkText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		blockCount.text = "x" + num;
-		if (time < timeScale)
+		if (time * Time.deltaTime < timeScale)
 			time++;
 		else {
 			num++;
