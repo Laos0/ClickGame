@@ -29,6 +29,8 @@ public class Shop : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        ConfigManager.loadConfig();
+
         // Get MGM Reference
         MGM = MGM_Object.GetComponent<MainGameManager>();
 
@@ -176,10 +178,10 @@ public class Shop : MonoBehaviour {
     }
 
     // Return the number of clicks that the autoclicker would generate in dt time
-    public int getScaledClicks(float dt)
+    public float getScaledClicks(float dt)
     {
         // Return the number of clicks that would happen in that time
-        int value = Mathf.FloorToInt(dt * autoclickValue);
+        float value = dt * autoclickValue;
         Debug.Log("Value: " + value.ToString());
         return value;
 
