@@ -7,7 +7,8 @@ public class Generator : MonoBehaviour {
 
     private List<Block> blocks = new List<Block>();
     private GameObject genStart, genNext;
-
+    private float inRow;
+    private bool genMore = false;
     int rows = 0, col = 0; 
 	// Use this for initialization
 	void Start () {
@@ -17,25 +18,45 @@ public class Generator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Vector2 pLoc = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().playerLocation;
 
+        if (pLoc.x > 0)
+        {
+            if(pLoc.x %5 == 1)
+            {
+                genMore = false;
+            }
+            if (pLoc.x % 5 == 0 && !genMore)
+            {
+                Debug.Log("GENERATING");
+                genBlock();
+            }
+        }
     }
 
-    void genBlock() {
-
-        genStart = GameObject.FindGameObjectWithTag("Gen_Start");
+    void genBlock()
+    {
+        genMore = true;
+        List<Block> grid = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid;
         genNext = genStart;
-
-        for (int i = 0; i < 50; i++)
+        //genNext.transform.position += new Vector3(rows * 0.25F, 0, 0);
+        for(int i = 0; i < 50; i++)
         {
-            blocks.Add(Instantiate(block));
+            grid.Add(Object.Instantiate(block));
+            grid[grid.Count - 1].transform.position = genNext.transform.position;
+            grid[grid.Count - 1].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
 
-            blocks[blocks.Count - 1].transform.position = genNext.transform.position;
-            blocks[blocks.Count - 1].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
-            blocks[blocks.Count - 1].GetComponent<Renderer>().material.color = getRandomColor(); 
-
+            grid[grid.Count - 1].GetComponent<Renderer>().material.color = getRandomColor();
+            grid[grid.Count - 1].color = grid[grid.Count - 1].GetComponent<Renderer>().material.color;
             genNext.transform.position += new Vector3(0.25F, 0, 0);
 
+            grid[grid.Count - 1].xCord = rows;
+            grid[grid.Count - 1].yCord = col;
+            grid[grid.Count - 1].setReward();
             col++;
+            
+            grid[grid.Count - 1].isClick = false;
+            
             if (col == 10)
             {
                 rows++;
@@ -43,8 +64,8 @@ public class Generator : MonoBehaviour {
                 genNext.transform.position = new Vector3(genNext.transform.position.x - (0.25F * 10), genNext.transform.position.y - 0.25F, 0);
 
             }
-
         }
+        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = grid;
     }
    
     void genGrid() {
@@ -52,7 +73,6 @@ public class Generator : MonoBehaviour {
         genNext = genStart;
 
         for(int i = 0; i < 100; i++) {
-            int x = 0;
             blocks.Add(Object.Instantiate(block));
             blocks[i].transform.position = genNext.transform.position;
             blocks[i].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
@@ -63,7 +83,7 @@ public class Generator : MonoBehaviour {
 
             blocks[i].xCord = rows;
             blocks[i].yCord = col;
-
+            blocks[i].setReward();
             col++;
             if(i < 10)
             {
@@ -81,7 +101,14 @@ public class Generator : MonoBehaviour {
 
             }
         }
-        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = blocks;
+        // Organize the game blocks into a container
+        blocks.ForEach(block =>
+        {
+            block.transform.parent = this.transform;
+        });
+        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = blocks;
+        // The purpose of the singleton class is so you can access the class from any script.  You can access the class instance.
+        MainGameManager.Instance.grid = blocks;
     }
 
     Color getRandomColor()
@@ -91,8 +118,8 @@ public class Generator : MonoBehaviour {
         if (color <= 40) { return Color.green; }
         else if (color > 40 && color < 60) { return Color.blue; }
         else if (color > 60 && color < 80) { return Color.red; }
-        else if (color > 80 && color < 90) { return Color.gray; }
-        else if (color >= 90) { return Color.magenta; }
+        else if (color > 80 && color < 95) { return Color.gray; }
+        else if (color >= 95) { return Color.magenta; }
         else { return Color.white; }
     }
 }

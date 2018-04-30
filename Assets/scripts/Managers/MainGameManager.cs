@@ -8,17 +8,25 @@ public class MainGameManager : Singleton<MainGameManager> {
     protected MainGameManager() { } 
 
     private static bool created = false;
+    public int rowCount = 0;
+    public GameObject rootCanvas,
+                      genStart,
+                      genNext;
 
-    public GameObject rootCanvas;
     public Text scoreTxt;
-
     public float currency;
+    public bool isGameStart,
+                counterStarted,
+                blockSelected;
 
-    public bool isGameStart, counterStarted;
-
-    public Block currentBlock;
-
+    public Vector2 playerLocation;
     public List<Block> grid;
+    public Block currentBlock,
+                 instBlock;
+
+    protected MainGameManager() { }
+
+    public float getCurrency() { return currency; }
 
     public bool blockSelected;
 
@@ -29,13 +37,19 @@ public class MainGameManager : Singleton<MainGameManager> {
             DontDestroyOnLoad(this.gameObject);
             created = true;
             Debug.Log("Awake: " + this.gameObject);
-            
+
         }
+    }
+
+    void Start()
+    {
+        instBlock = Resources.Load("Block", typeof(Block)) as Block;
+        genGrid();
     }
 
     private void Update()
     {
-        if (currentBlock != null && !counterStarted)
+        if(currentBlock != null && !counterStarted)
         {
             startCurrencyCounter();
             counterStarted = true;
@@ -69,17 +83,12 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     IEnumerator addToCurrency()
     {
-        while (isGameStart)
+        while(isGameStart)
         {
-            // Debug.Log("OnCoroutine: " + (int)Time.time);
-            if (currentBlock != null)
+            if(currentBlock != null)
             {
                 currentBlock.hit();
                 yield return new WaitForSeconds(1);
-            }
-            else
-            {
-               //wait for next selection
             }
         }
     }
@@ -89,52 +98,37 @@ public class MainGameManager : Singleton<MainGameManager> {
         currency = 0;
     }
 
-
-    // Everytime a block is hit, the currency is increased based off the "value" that block contains
-    public void addToCurrency(int value)
+    public void addToCurrency(float value)
     {
         currency += value;
         updateCurrencyUI();
     }
 
+    public void subToCurrency(float value)
+    {
+        currency -= value;
+        updateCurrencyUI();
+    }
 
-    // Update the currency on the UI 
     private void updateCurrencyUI()
     {
-        if (scoreTxt != null)
+        if(scoreTxt != null)
         {
             scoreTxt.text = "" + currency;
         }
-        else
-        {
-            Debug.Log("scoreTxt equals null");
-        }
-      
-        //Debug.Log(currency);
-    }
-
-    // Each item has a value, and currency will be deducted based off the value of that item, once purchased.
-    public void subToCurrency(int value)
-    {
-        currency -= value;
-        if(currency < 0)
-        {
-            currency = 0;
-        }
-        updateCurrencyUI();
     }
 
     public Block getNextBlock()
     {
-        Vector2 currentLocation = new Vector2(currentBlock.xCord, currentBlock.yCord);
-        if(currentLocation.x < 9)
+        Vector2 curPos = playerLocation;
+        if(curPos.x < 9)
         {
-            currentLocation.y++;
+            curPos.x++;
         }
 
-        for(int i = 0; i < grid.Capacity; i++)
+        for(int i = 0; i < grid.Count; i++)
         {
-            if (currentLocation == grid[i].getLocation())
+            if(curPos == grid[i].getLocation())
             {
                 grid[i].isClick = true;
                 grid[i].selected = true;
@@ -144,8 +138,116 @@ public class MainGameManager : Singleton<MainGameManager> {
 
         return null;
     }
-    
-    // Return the current currency value
-    public float getCurrency () { return currency; }
-}
 
+    private void genGrid()
+    {
+        int row = 0,
+            col = 0;
+
+        genStart = GameObject.FindGameObjectWithTag("Gen_Start");
+        genNext = genStart;
+
+        for(int i = 0; i < 100; i++)
+        {
+            grid.Add(Object.Instantiate(instBlock));
+
+            grid[i].transform.position = genNext.transform.position;
+            grid[i].transform.localScale = new Vector3(0.25F, 0.25F, 0.25F);
+            grid[i].GetComponent<Renderer>().material.color = getRandomColor();
+            grid[i].color = grid[i].GetComponent<Renderer>().material.color;
+
+            genNext.transform.position += new Vector3(0.25F, 0, 0);
+
+            grid[i].xCord = col;
+            grid[i].yCord = row;
+            grid[i].setReward();
+            col++;
+
+            if(i < 10)
+            {
+                grid[i].isClick = true;
+            }
+            else
+            {
+                grid[i].isClick = false;
+            }
+
+            if(col == 10)
+            {
+                row++;
+                col = 0;
+                genNext.transform.position = new Vector3(genNext.transform.position.x - (0.25F * 10), genNext.transform.position.y - 0.25F, 0);
+            }
+            Debug.Log(grid[i].getLocation());
+        }
+    }
+
+    Color getRandomColor()
+    {
+        int color = Random.Range(-1, 101);
+
+        if (color <= 40) { return Color.green; }
+        else if (color > 40 && color < 60) { return Color.blue; }
+        else if (color > 60 && color < 80) { return Color.red; }
+        else if (color > 80 && color < 95) { return Color.gray; }
+        else if (color >= 95) { return Color.magenta; }
+        else { return Color.white; }
+    }
+
+    public Block getBlock(Vector2 location)
+    {
+        for(int i = 0; i < grid.Count; i++)
+        {
+            if(grid[i].getLocation() == location)
+            {
+                return grid[i];
+            }
+        }
+        return null;
+    }
+
+    public int getBlockIndex(Block block)
+    {
+        for (int i = 0; i < grid.Count; i++)
+        {
+            if(grid[i] == block)
+            {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+}
+/// <summary>
+/// This is a persistent state class that exist throughout the life of the game session
+/// </summary>
+public class MainGameManager : Singleton<MainGameManager> {
+
+    protected MainGameManager() { } 
+
+public class MainGameManager : Singleton<MainGameManager>
+{
+    public bool blockSelected;
+
+    // Shattering effect
+    //public GameObject block;
+    //public GameObject destructionParticle;
+
+        for(int i = 0; i < grid.Count; i++)
+        {
+            if(grid[i].selected)
+            {
+                blockSelected = true;
+                currentBlock = grid[i];
+            }
+        if(blockSelected)
+        {
+            for(int i = 0; i < grid.Count; i++)
+            {
+                if(!grid[i].selected)
+                {
+                    grid[i].isClick = false;
+                }
+            }
+            playerLocation = currentBlock.getLocation();
