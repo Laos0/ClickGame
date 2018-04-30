@@ -25,6 +25,7 @@ public class ConfigManager {
         {
             Debug.Log("Setting up a default config since no file was found!");
             config["Statistics"]["Points"].IntValue = 0;
+            config["Statistics"]["Shop Value"].FloatValue = 0;
             config["Statistics"]["Items Unlocked"].IntValue = 1;
 
             // Items Owned
