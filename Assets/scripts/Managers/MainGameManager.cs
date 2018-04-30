@@ -136,6 +136,36 @@ public class MainGameManager : Singleton<MainGameManager> {
         return null;
     }
 
+    public List<Block> getSurrondingBlocks()
+    {
+        List<Block> surroundingBlocks = new List<Block>();
+        int curX = (int)playerLocation.x;
+        int curY = (int)playerLocation.y;
+
+        if (curY == 0)
+        {
+            if(curX == 0)
+            {
+                surroundingBlocks.Add(getBlock(new Vector2(curX + 1, curY)));
+                surroundingBlocks.Add(getBlock(new Vector2(curX, curY + 1)));
+                surroundingBlocks.Add(getBlock(new Vector2(curX + 1, curY + 1)));
+            }
+            else if(curX == 9)
+            {
+                surroundingBlocks.Add(getBlock(new Vector2(curX - 1, curY)));
+                surroundingBlocks.Add(getBlock(new Vector2(curX - 1, curY + 1)));
+                surroundingBlocks.Add(getBlock(new Vector2(curX, curY + 1)));
+            }
+
+        }
+
+        for(int i = 0; i < surroundingBlocks.Count; i++)
+        {
+            //surroundingBlocks[i].GetComponent<Renderer>().material.color = surroundingBlocks[i].lightUp;
+        }
+        return surroundingBlocks;
+    }
+
     private void genGrid()
     {
         int row = 0,

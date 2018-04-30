@@ -1,10 +1,9 @@
-﻿// This class is the parent class for all Block objects
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour {
+public class Block : MonoBehaviour
+{
     public float reward,
                  multiplier,
                  clicksNeeded;
@@ -13,80 +12,83 @@ public class Block : MonoBehaviour {
                yCord;
 
     public bool isClick,
-                selected;
+                selected,
+                isDestructionParticleExist,
+                isClickParticleExist;
 
-    public Color color;
-    public Block nextBlock;
-    
-    // Destruction effects on cubes
-    public GameObject destructionParticle;
-    public GameObject clickParticle;
-   // GameObject destructionEffect;
+    public Color color,
+                 litUp;
+
+    public GameObject destructionParticle,
+                      clickParticle;
+
     private ParticleSystem clickEffect;
-    public bool isDestructionParticleExist;
-    public bool isClickParticleExist;
-   
 
-    void Start ()
+    void Start()
     {
+        litUp = Color.magenta;
         clicksNeeded = 5;
-        reward = 50;
-        multiplier = 1;
         selected = false;
-        // Render the particle infront of block
-       destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
+        destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
     }
 
     void Update()
     {
         if (clicksNeeded <= 0)
+        {
+            destroyBlock();
+        }
 
-            // Update is called once per frame
-            
+        if (selected)
+        {
+            if (!gameObject.GetComponent<Outline>().enabled)
+            {
+                enableOutline();
+            }
+        }
+        else
+        {
+            disableOutline();
+        }
+    }
 
-                if (clicksNeeded <= 0)
-                {
-                    GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
-                    Object.Destroy(gameObject);
-                    GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(reward);
-                    GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
-                    if (!isDestructionParticleExist)
-                    {
+    void destroyBlock()
+    {
+        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
+        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(reward);
 
-                        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(this.reward);
-                        MainGameManager.Instance.addToCurrency(this.reward);
+        selected = false;
 
-                        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
-                        MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock();
+        if (!isDestructionParticleExist)
+        {
+            //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(this.reward);
+            MainGameManager.Instance.addToCurrency(this.reward);
 
-                        // When the blocks are destroyed, particle will spawn at their location and a sound will be played.
+            //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
+            MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock();
 
-
-                        GameObject destructionEffect = Instantiate(destructionParticle, getOffSetSpawnPosition(gameObject.transform.position), gameObject.transform.rotation);
-                        destructionEffect.transform.parent = gameObject.transform;
-                        SoundManager.Instance.playCrumbleSound();
-                        isDestructionParticleExist = true;
-
-
-                        Destroy(gameObject, .2f);
-                    }
-
-
-                }
+            // When the blocks are destroyed, particle will spawn at their location and a sound will be played.
 
 
-                if (selected)
-                {
-                    this.GetComponent<Outline>().enabled = true;
-                    this.GetComponent<Renderer>().material.color = color;
+            GameObject destructionEffect = Instantiate(destructionParticle, getOffSetSpawnPosition(gameObject.transform.position), gameObject.transform.rotation);
+            destructionEffect.transform.parent = gameObject.transform;
+            SoundManager.Instance.playCrumbleSound();
+            isDestructionParticleExist = true;
 
-                }
-                else
-                {
-                    this.GetComponent<Outline>().enabled = false;
-                    this.GetComponent<Renderer>().material.color = color;
-                }
-            
+            Destroy(gameObject, .2f);
+        }
+    }
+
+    void enableOutline()
+    {
+        this.GetComponent<Outline>().enabled = true;
+        this.GetComponent<Renderer>().material.color = color;
+    }
+
+    void disableOutline()
+    {
+        this.GetComponent<Outline>().enabled = false;
+        this.GetComponent<Renderer>().material.color = color;
     }
 
     public Vector2 getLocation()
@@ -94,13 +96,15 @@ public class Block : MonoBehaviour {
         return new Vector2(xCord, yCord);
     }
 
-    public void setClicks(int clicks) { this.clicksNeeded = clicks; }
+    public void setClicks(int clicks)
+    {
+        this.clicksNeeded = clicks;
+    }
 
     void OnMouseDown()
     {
         if (isClick)
         {
-            if (!selected)
             if (!isClickParticleExist)
             {
                 clickEffect = Instantiate(clickParticle, new Vector3(), gameObject.transform.rotation).GetComponent<ParticleSystem>();
@@ -109,7 +113,8 @@ public class Block : MonoBehaviour {
             }
             else
             {
-                if (!clickEffect.isPlaying) {
+                if (!clickEffect.isPlaying)
+                {
                     clickEffect.Play();
                 }
             }
@@ -124,6 +129,10 @@ public class Block : MonoBehaviour {
                 this.clicksNeeded--;
                 GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(1 * (int)this.multiplier);
             }
+        }
+        else
+        {
+
         }
     }
 
@@ -143,8 +152,15 @@ public class Block : MonoBehaviour {
         else { reward = 50; }
     }
 
-    public float getReward() { return reward; }
-    public float getClicksNeeded() { return clicksNeeded; }
+    public float getReward()
+    {
+        return reward;
+    }
+
+    public float getClicksNeeded()
+    {
+        return clicksNeeded;
+    }
 
     private Vector3 getOffSetSpawnPosition(Vector3 position)
     {
