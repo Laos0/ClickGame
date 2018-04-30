@@ -1,41 +1,37 @@
-﻿// This class is the parent class for all Block objects
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Block : MonoBehaviour {
-    public float reward,
-                 multiplier,
-                 clicksNeeded;
-
-    public int xCord,
-               yCord;
-
-    public bool isClick,
-                selected;
-
+ public float clicksNeeded;  // The number of clicks needed to break this block
+    public float reward;  // The number of points the player gets for breaking this block
+    public float multiplier;
+    public int xCord, yCord;
+    public bool isClick;
+    public bool selected;
     public Color color;
+    public Block nextBlock;
 
-    void Start ()
+    Block(int clicks, int reward)
     {
+        this.clicksNeeded = clicks;
+        this.reward = reward;
+        this.multiplier = 1;
+    }
+
+    // Use this for initialization
+    void Start () {
         clicksNeeded = 5;
         reward = 50;
         multiplier = 1;
         selected = false;
     }
-
-    void Update()
-    {
-        if(clicksNeeded <= 0)
+	
+	// Update is called once per frame
+	void Update () {
+		if(clicksNeeded <= 0)
         {
-            GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
             Object.Destroy(gameObject);
             GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(reward);
             GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
         }
 
-        if (selected)
+        if(selected)
         {
             this.GetComponent<Outline>().enabled = true;
             this.GetComponent<Renderer>().material.color = color;
@@ -46,20 +42,27 @@ public class Block : MonoBehaviour {
             this.GetComponent<Outline>().enabled = false;
             this.GetComponent<Renderer>().material.color = color;
         }
-    }
+	}
 
-    public Vector2 getLocation()
+    // Getters
+    public float getReward() { return reward; }
+    public float getClicksNeeded() { return clicksNeeded; }
+    public void setReward()
     {
-        return new Vector2(xCord, yCord);
+        if (color == Color.green) { reward = 50; }
+        else if (color == Color.blue) { reward = 75; }
+        else if (color == Color.red) { reward = 150; }
+        else if (color == Color.gray) { reward = 200; }
+        else if (color == Color.magenta) { reward = 300; }
+        else { reward = 50; }
     }
-
     public void setClicks(int clicks) { this.clicksNeeded = clicks; }
 
     void OnMouseDown()
     {
-        if (isClick)
+        if (isClick) 
         {
-            if (!selected)
+            if(!selected)
             {
                 selected = true;
                 GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = this;
@@ -78,16 +81,7 @@ public class Block : MonoBehaviour {
         GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(1 * (int)this.multiplier);
     }
 
-    public void setReward()
+    public Vector2 getLocation()
     {
-        if (color == Color.green) { reward = 50; }
-        else if (color == Color.blue) { reward = 75; }
-        else if (color == Color.red) { reward = 150; }
-        else if (color == Color.gray) { reward = 200; }
-        else if (color == Color.magenta) { reward = 300; }
-        else { reward = 50; }
+        return new Vector2(xCord, yCord);
     }
-
-    public float getReward() { return reward; }
-    public float getClicksNeeded() { return clicksNeeded; }
-}

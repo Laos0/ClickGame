@@ -1,0 +1,183 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine;
+
+public class MainGameManager : Singleton<MainGameManager> {
+
+    protected MainGameManager() { } 
+
+    private static bool created = false;
+
+    public GameObject rootCanvas;
+    public Text scoreTxt;
+
+    public float currency;
+
+    public bool isGameStart, counterStarted;
+
+    public Block currentBlock;
+
+    public List<Block> grid;
+
+    public bool blockSelected;
+
+    public Vector2 playerLocation;
+
+    void Awake()
+    {
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+            Debug.Log("Awake: " + this.gameObject);
+            
+        }
+    }
+
+    private void Update()
+    {
+        if (currentBlock != null && !counterStarted)
+        {
+            startCurrencyCounter();
+            counterStarted = true;
+        }
+
+        for(int i = 0; i < grid.Count; i++)
+        {
+            if(grid[i].selected)
+            {
+                blockSelected = true;
+                currentBlock = grid[i];
+            }
+        }
+
+        if(blockSelected)
+        {
+            for (int i = 0; i < grid.Count; i++)
+            {
+                if(!grid[i].selected)
+                {
+                    grid[i].isClick = false;
+                }
+            }
+            playerLocation = currentBlock.getLocation();
+        }
+    }
+
+    public void startCurrencyCounter()
+    {
+        isGameStart = true;
+        StartCoroutine(addToCurrency());
+    }
+
+    IEnumerator addToCurrency()
+    {
+        while (isGameStart)
+        {
+            // Debug.Log("OnCoroutine: " + (int)Time.time);
+            if (currentBlock != null)
+            {
+                currentBlock.hit();
+                yield return new WaitForSeconds(1);
+            }
+            else
+            {
+               //wait for next selection
+            }
+        }
+    }
+
+    public void resetCurrency()
+    {
+        currency = 0;
+    }
+
+
+    // Everytime a block is hit, the currency is increased based off the "value" that block contains
+    public void addToCurrency(float value)
+    {
+        currency += value;
+        updateCurrencyUI();
+    }
+
+
+    // Update the currency on the UI 
+    private void updateCurrencyUI()
+    {
+        if (scoreTxt != null)
+        {
+            scoreTxt.text = "" + currency;
+        }
+        else
+        {
+            Debug.Log("scoreTxt equals null");
+        }
+      
+        //Debug.Log(currency);
+    }
+
+    // Each item has a value, and currency will be deducted based off the value of that item, once purchased.
+    public void subToCurrency(int value)
+    {
+        currency -= value;
+        if(currency < 0)
+        {
+            currency = 0;
+        }
+        updateCurrencyUI();
+    }
+
+    public Block getNextBlock()
+    {
+        Vector2 currentLocation = new Vector2(currentBlock.xCord, currentBlock.yCord);
+        if(currentLocation.x < 9)
+        {
+            currentLocation.x++;
+        }
+
+        for(int i = 0; i < grid.Count; i++)
+        {
+            if (currentLocation == grid[i].getLocation())
+            {
+                grid[i].isClick = true;
+                grid[i].selected = true;
+                return grid[i];
+            }
+        }
+
+        return null;
+    }
+
+    public List<Block> getSurroundingBlocks()
+    {
+        List<Block> sBlocks = new List<Block>();
+        Vector2 currentLocation = new Vector2(currentBlock.xCord, currentBlock.yCord);
+
+        for (int i = 0; i < grid.Count; i++)
+        {
+            if (currentLocation == grid[i].getLocation())
+            {
+                grid[i].isClick = true;
+                sBlocks.Add(grid[i - 1]);
+                sBlocks.Add(grid[i + 1]);
+                sBlocks.Add(grid[i + 9]);
+                sBlocks.Add(grid[i + 10]);
+                sBlocks.Add(grid[i + 11]);
+            }
+        }
+
+        if (sBlocks.Count > 0)
+        {
+            return sBlocks;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    // Return the current currency value
+    public float getCurrency () { return currency; }
+}
+
