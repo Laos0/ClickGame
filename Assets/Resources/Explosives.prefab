@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224242537010194524}
   - component: {fileID: 222872604996901406}
   - component: {fileID: 114878456460647902}
+  - component: {fileID: 114867108032028964}
   - component: {fileID: 114504418862131120}
   m_Layer: 5
   m_Name: Explosives
@@ -85,8 +86,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: buyExplosives
+      - m_Target: {fileID: 114867108032028964}
+        m_MethodName: clickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -133,6 +134,17 @@ MonoBehaviour:
   m_Text: 'Autominer
 
     25'
+--- !u!114 &114867108032028964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1061190498314726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c920be5ff8c44843afae41f61a6af07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114878456460647902
 MonoBehaviour:
   m_ObjectHideFlags: 1

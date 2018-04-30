@@ -8,6 +8,7 @@ public class SoundManager : Singleton<SoundManager> {
 
     public AudioSource startMenuAudio;
     public AudioSource blockOnHitAudio;
+    public AudioSource crumbleAudio;
 
     private static bool created = false;
 
@@ -24,6 +25,11 @@ public class SoundManager : Singleton<SoundManager> {
     public void playBlockSound()
     {
         blockOnHitAudio.Play();
+    }
+
+    public void playCrumbleSound()
+    {
+        crumbleAudio.Play();
     }
 
 

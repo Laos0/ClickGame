@@ -124,10 +124,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0
-  location: {fileID: 0}
+  xCord: 0
+  yCord: 0
   isClick: 0
   selected: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+  nextBlock: {fileID: 0}
+  destructionParticle: {fileID: 1878333735413370, guid: 7575567fecf70a04caed3dc4e0ef1278,
+    type: 2}
+  clickParticle: {fileID: 1182940625431266, guid: 8eab4e2191596774e9912eabe8d92797,
+    type: 2}
+  isDestructionParticleExist: 0
+  isClickParticleExist: 0
 --- !u!114 &114860215840716846
 MonoBehaviour:
   m_ObjectHideFlags: 1

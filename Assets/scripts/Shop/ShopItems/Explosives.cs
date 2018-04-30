@@ -11,6 +11,6 @@ public class Explosives : ShopItem {
         price = 5000;
         clicksPerTick = 500;
         name = "Explosives";
-        threshold = 300;
+        threshold = 3000;
     }
 }

@@ -27,7 +27,8 @@ public class blkText : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		num--;
+		if (num > 0)
+			num--;
 		blockCount.text = "x" + num;
 	}
 }

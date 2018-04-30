@@ -69,7 +69,7 @@ public class ShopItem {
     // Set the reference to the MGM
     public void setMGM(MainGameManager newMGM)
     {
-        newMGM = newMGM;
+        MGM = newMGM;
 
     }
 }
