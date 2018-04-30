@@ -36,51 +36,53 @@ public class Block : MonoBehaviour {
         // Render the particle infront of block
        destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
     }
-	
 	// Update is called once per frame
 	void Update () {
 
-		if(clicksNeeded <= 0)
-        {
-            GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
-            Object.Destroy(gameObject);
-            GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(reward);
-            GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
-            if (!isDestructionParticleExist)
-            {
+            // Update is called once per frame
+                if (clicksNeeded <= 0)
+                {
+                    GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
+                    Object.Destroy(gameObject);
+                    GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(reward);
+                    GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
+                    if (!isDestructionParticleExist)
+                    {
 
-                //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(this.reward);
-                MainGameManager.Instance.addToCurrency(this.reward);
+                        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(this.reward);
+                        MainGameManager.Instance.addToCurrency(this.reward);
 
-                //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
-                MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock();
+                        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
+                        MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock();
 
-                // When the blocks are destroyed, particle will spawn at their location and a sound will be played.
-
-
-                GameObject destructionEffect = Instantiate(destructionParticle, getOffSetSpawnPosition(gameObject.transform.position), gameObject.transform.rotation);
-                destructionEffect.transform.parent = gameObject.transform;
-                SoundManager.Instance.playCrumbleSound();
-                isDestructionParticleExist = true;
+                        // When the blocks are destroyed, particle will spawn at their location and a sound will be played.
 
 
-                Destroy(gameObject, .2f);
-            }
+                        GameObject destructionEffect = Instantiate(destructionParticle, getOffSetSpawnPosition(gameObject.transform.position), gameObject.transform.rotation);
+                        destructionEffect.transform.parent = gameObject.transform;
+                        SoundManager.Instance.playCrumbleSound();
+                        isDestructionParticleExist = true;
 
 
-        }
+                        Destroy(gameObject, .2f);
+                    }
 
-        if (selected)
-        {
-            this.GetComponent<Outline>().enabled = true;
-            this.GetComponent<Renderer>().material.color = color;
 
-        }
-        else
-        {
-            this.GetComponent<Outline>().enabled = false;
-            this.GetComponent<Renderer>().material.color = color;
-        }
+                }
+
+
+                if (selected)
+                {
+                    this.GetComponent<Outline>().enabled = true;
+                    this.GetComponent<Renderer>().material.color = color;
+
+                }
+                else
+                {
+                    this.GetComponent<Outline>().enabled = false;
+                    this.GetComponent<Renderer>().material.color = color;
+                }
+            
     }
 
     public Vector2 getLocation()

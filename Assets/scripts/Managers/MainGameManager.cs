@@ -24,11 +24,8 @@ public class MainGameManager : Singleton<MainGameManager> {
     public Block currentBlock,
                  instBlock;
 
-    protected MainGameManager() { }
-
     public float getCurrency() { return currency; }
 
-    public bool blockSelected;
 
     void Awake()
     {
@@ -219,35 +216,5 @@ public class MainGameManager : Singleton<MainGameManager> {
         return 0;
     }
 }
-/// <summary>
-/// This is a persistent state class that exist throughout the life of the game session
-/// </summary>
-public class MainGameManager : Singleton<MainGameManager> {
 
-    protected MainGameManager() { } 
 
-public class MainGameManager : Singleton<MainGameManager>
-{
-    public bool blockSelected;
-
-    // Shattering effect
-    //public GameObject block;
-    //public GameObject destructionParticle;
-
-        for(int i = 0; i < grid.Count; i++)
-        {
-            if(grid[i].selected)
-            {
-                blockSelected = true;
-                currentBlock = grid[i];
-            }
-        if(blockSelected)
-        {
-            for(int i = 0; i < grid.Count; i++)
-            {
-                if(!grid[i].selected)
-                {
-                    grid[i].isClick = false;
-                }
-            }
-            playerLocation = currentBlock.getLocation();
