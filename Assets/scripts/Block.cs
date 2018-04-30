@@ -36,10 +36,6 @@ public class Block : MonoBehaviour {
         // Render the particle infront of block
        destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
     }
-
-    void Update()
-    {
-        if(clicksNeeded <= 0)
 	
 	// Update is called once per frame
 	void Update () {
