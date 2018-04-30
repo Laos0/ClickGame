@@ -66,4 +66,11 @@ public class ConfigManager {
     {
         return config["Items Owned"]["Item"+index.ToString()].IntValue = 0;
     }
+
+
+    // Reset the 
+    public static void reset()
+    {
+
+    }
 }
