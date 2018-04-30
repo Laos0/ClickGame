@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// This is a persistent state class that exist throughout the life of the game session
+/// </summary>
 public class MainGameManager : Singleton<MainGameManager> {
 
     protected MainGameManager() { } 
@@ -21,6 +24,10 @@ public class MainGameManager : Singleton<MainGameManager> {
     public List<Block> grid;
 
     public bool blockSelected;
+
+    // Shattering effect
+    //public GameObject block;
+    //public GameObject destructionParticle;
 
     void Awake()
     {

@@ -81,7 +81,14 @@ public class Generator : MonoBehaviour {
 
             }
         }
-        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = blocks;
+        // Organize the game blocks into a container
+        blocks.ForEach(block =>
+        {
+            block.transform.parent = this.transform;
+        });
+        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = blocks;
+        // The purpose of the singleton class is so you can access the class from any script.  You can access the class instance.
+        MainGameManager.Instance.grid = blocks;
     }
 
     Color getRandomColor()
