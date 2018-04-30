@@ -13,6 +13,8 @@ public class Shop : MonoBehaviour {
     // MGM class
     MainGameManager MGM;
 
+    float shopValue;
+
     // List of UI elements for the different shop items
     public List<UnityEngine.UI.Button> ShopItemButtons = new List<UnityEngine.UI.Button>();
 
@@ -29,6 +31,8 @@ public class Shop : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        shopValue = 0;
+
         ConfigManager.loadConfig();
 
         // Get MGM Reference
@@ -138,6 +142,10 @@ public class Shop : MonoBehaviour {
             MGM.subToCurrency(ShopItems[index].getPrice());
             // Increase the autoclicker value
             autoclickValue += ShopItems[index].getClicks();
+
+            // Add the cost of this item to shopValue
+            shopValue += ShopItems[index].getPrice();
+
             // Call the shopItem's purchase function (for bookkeeping)
             ShopItems[index].purchase();
 
@@ -185,6 +193,12 @@ public class Shop : MonoBehaviour {
         Debug.Log("Value: " + value.ToString());
         return value;
 
+    }
+
+    // Returns the total value of your shop
+    public float getShopValue()
+    {
+        return shopValue;
     }
 
 }

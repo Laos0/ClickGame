@@ -32,8 +32,6 @@ public class Block : MonoBehaviour
         destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
     }
 	// Update is called once per frame
-	void Update () {
-
     void Update()
     {
         if (clicksNeeded <= 0)
