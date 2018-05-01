@@ -57,6 +57,9 @@ public class Shop : MonoBehaviour {
         newButtonY_change = 75;
         newButtonY = ShopItemButtons[0].transform.position.y - newButtonY_change;
 
+        shopValue = ConfigManager.getShopValue();
+        MGM.currency = ConfigManager.getCurrency();
+
         // Load the file
         for (int i = 1; i < ConfigManager.getItems(); i++)
         {
@@ -103,6 +106,8 @@ public class Shop : MonoBehaviour {
                 newButton.transform.position = new Vector2(newButtonX, newButtonY);
                 newButtonY -= newButtonY_change;
                 newButton.GetComponent<ShopItemButton>().initialize(this, i);
+
+                itemsUnlocked++;
 
                 updateButtonText(i);
 
@@ -199,6 +204,18 @@ public class Shop : MonoBehaviour {
     public float getShopValue()
     {
         return shopValue;
+    }
+
+    // Return the number of the given shop item the player already owns
+    public int getNumberOwned(int index)
+    {
+        return ShopItems[index].getNumberOwned();
+    }
+
+    // Return the number of items the player has unlocked
+    public int getItemsUnlocked()
+    {
+        return itemsUnlocked;
     }
 
 }

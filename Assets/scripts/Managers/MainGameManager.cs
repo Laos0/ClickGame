@@ -136,7 +136,7 @@ public class MainGameManager : Singleton<MainGameManager> {
         return null;
     }
 
-    private void genGrid()
+    public void genGrid()
     {
         int row = 0,
             col = 0;
