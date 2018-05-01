@@ -8,6 +8,7 @@ public class OpenShop : MonoBehaviour {
     
 	// Use this for initialization
 	void Start () {
+        shopOb.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -15,11 +16,13 @@ public class OpenShop : MonoBehaviour {
 		
 	}
 
+    // Close the shop
     public void hideShop()
     {
         shopOb.SetActive(false);
     }
 
+    // Open the shop
     public void showShop()
     {
         shopOb.SetActive(true);
