@@ -5,6 +5,14 @@ using UnityEngine;
 public class Generator : MonoBehaviour {
     public Block block;
 
+    // Colorblind safe colors
+    public Color32 color1 = new Color32(49, 130, 189, 255);
+    public Color32 color2 = new Color32(254, 178, 76, 255);
+    public Color32 color3 = new Color32(189, 0, 38, 255);
+    public Color32 color4 = new Color32(37, 37, 37, 255);
+    public Color32 color5 = new Color32(0, 109, 44, 255);
+    public Color32 color6 = new Color(247, 104, 161, 255);
+
     private List<Block> blocks = new List<Block>();
     private GameObject genStart, genNext;
     private float inRow;
@@ -114,12 +122,17 @@ public class Generator : MonoBehaviour {
     Color getRandomColor()
     {
         int color = Random.Range(-1, 101);
+        // Debug.Log(color);
 
-        if (color <= 40) { return Color.green; }
-        else if (color > 40 && color < 60) { return Color.blue; }
-        else if (color > 60 && color < 80) { return Color.red; }
-        else if (color > 80 && color < 95) { return Color.gray; }
-        else if (color >= 95) { return Color.magenta; }
+        if (color <= 20)  {return color1; }
+        else if (color > 20 && color < 40) { return color2; }
+        else if (color > 40 && color < 60) { return color3; }
+        else if (color > 60 && color < 80) { return color4; }
+        else if (color > 80 && color < 90) { return color5; }
+        else if (color >= 90) { return color6; }
+
+        // yellow red blue black and white are all pretty distinct from each other in all types of color blindness
+
         else { return Color.white; }
     }
 }
