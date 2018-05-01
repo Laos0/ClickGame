@@ -29,8 +29,8 @@ public class Shop : MonoBehaviour {
     float newButtonY;
     float newButtonY_change;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         shopValue = 0;
 
         ConfigManager.loadConfig();
@@ -54,7 +54,7 @@ public class Shop : MonoBehaviour {
         updateButtonText(0);
 
         newButtonX = ShopItemButtons[0].transform.position.x;
-        newButtonY_change = 75;
+        newButtonY_change = ShopItemButtons[0].GetComponent<RectTransform>().rect.height * 1.5f;
         newButtonY = ShopItemButtons[0].transform.position.y - newButtonY_change;
 
         shopValue = ConfigManager.getShopValue();
