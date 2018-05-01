@@ -110,4 +110,7 @@ public class ConfigManager {
             config["Items Owned"]["Item" + i.ToString()].IntValue = 0;
         }   
     }
+
+    public static float getCurrency() { return config["Statistics"]["Currency"].FloatValue; }
+
 }
