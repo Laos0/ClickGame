@@ -9,6 +9,12 @@ public class SoundManager : Singleton<SoundManager> {
     public AudioSource startMenuAudio;
     public AudioSource blockOnHitAudio;
     public AudioSource crumbleAudio;
+     
+    /// <summary>
+    /// This is for generic UI buttons, call this audio
+    /// </summary>
+    public AudioSource uiButtonAudio;
+   
 
     private static bool created = false;
 
@@ -32,5 +38,9 @@ public class SoundManager : Singleton<SoundManager> {
         crumbleAudio.Play();
     }
 
+    public void playButtonClickSound()
+    {
+        uiButtonAudio.Play();
+    }
 
 }

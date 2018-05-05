@@ -50,7 +50,6 @@ public class Block : MonoBehaviour
 				getRandomReward();
 				hasNotDropped = false;
 			}
-
             destroyBlock();
         }
 
@@ -89,6 +88,8 @@ public class Block : MonoBehaviour
             destructionEffect.transform.parent = gameObject.transform;
             SoundManager.Instance.playCrumbleSound();
             isDestructionParticleExist = true;
+
+            MainGameManager.Instance.countBlock++;
 
             Destroy(gameObject, .2f);
         }

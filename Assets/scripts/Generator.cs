@@ -44,6 +44,7 @@ public class Generator : MonoBehaviour {
 
     void genBlock()
     {
+       
         genMore = true;
         List<Block> grid = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid;
         genNext = genStart;
@@ -74,9 +75,11 @@ public class Generator : MonoBehaviour {
             }
         }
         GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid = grid;
+       
     }
    
     void genGrid() {
+       
         genStart = GameObject.FindGameObjectWithTag("Gen_Start");
         genNext = genStart;
 

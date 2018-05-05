@@ -26,6 +26,11 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     public float getCurrency() { return currency; }
 
+    /// <summary>
+    /// Keepe track of the current block destroyed
+    /// </summary>
+    public int countBlock;
+
 
     void Awake()
     {
@@ -40,6 +45,7 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     void Start()
     {
+        countBlock = 0;
         // When game starts currency adds
         startCurrencyCounter();
         instBlock = Resources.Load("Block", typeof(Block)) as Block;
@@ -84,7 +90,7 @@ public class MainGameManager : Singleton<MainGameManager> {
     {
         while(isGameStart)
         {
-            addToCurrency(1);
+            addToCurrency(1 * countBlock);
             //Debug.Log(this.currency);
             yield return new WaitForSeconds(1);
         
