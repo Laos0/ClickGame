@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Block : MonoBehaviour
 {
@@ -19,8 +20,12 @@ public class Block : MonoBehaviour
     public Color color,
                  litUp;
 
-    public GameObject destructionParticle,
-                      clickParticle;
+	public GameObject destructionParticle,
+					  clickParticle;
+
+	public GameObject smallDrop, medDrop, largeDrop;
+	public bool hasNotDropped;
+	//public Text dropText; Will Fix
 
     private ParticleSystem clickEffect;
 
@@ -30,12 +35,22 @@ public class Block : MonoBehaviour
         clicksNeeded = 5;
         selected = false;
         destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
+		smallDrop = GameObject.FindGameObjectWithTag("sDrop");
+		medDrop = GameObject.FindGameObjectWithTag("mDrop");
+		largeDrop = GameObject.FindGameObjectWithTag("lDrop");
+		hasNotDropped = true;
     }
 	// Update is called once per frame
     void Update()
     {
         if (clicksNeeded <= 0)
         {
+			if(hasNotDropped)
+			{
+				getRandomReward();
+				hasNotDropped = false;
+			}
+
             destroyBlock();
         }
 
@@ -171,4 +186,43 @@ public class Block : MonoBehaviour
 
         return spawnPosition;
     }
+
+	//This methoed is called when a block is destroyed to see of a random item will drop for more rewards
+	public void getRandomReward()
+	{		
+			int spawnChance = Random.Range(0, 100);
+
+
+			//Check if something spawns
+			if (spawnChance >= 0 && spawnChance < 30)
+			{
+				//Spawn small reward
+					//Instantiate(smallDrop, transform.position, transform.rotation);
+				Debug.Log("You got a small Gem: + 50 points");
+			MainGameManager.Instance.addToCurrency(50);
+
+				//dropText.text = "Random Drop: Small Gem: + 50!";
+
+			}
+			if (spawnChance >= 30 && spawnChance < 45)
+			{
+				//spawn medium reward
+					//Instantiate(medDrop, transform.position, transform.rotation);
+				Debug.Log("You got a medium Gem: + 100 points");
+				MainGameManager.Instance.addToCurrency(100);
+				//dropText.text = "Random Drop: Medium Gem: + 100!";
+		}
+			if (spawnChance >= 45 && spawnChance < 50)
+			{
+				//spawn large reward
+					//Instantiate(largeDrop, transform.position, transform.rotation);
+				Debug.Log("You got a large Gem: + 200 points");
+				MainGameManager.Instance.addToCurrency(200);
+				//dropText.text = "Random Drop: Large Gem: + 200!";
+			if(spawnChance >= 50)
+			{
+				//dropText.text = "Nothing";
+			}
+		}
+	}
 }

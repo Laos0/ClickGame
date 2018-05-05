@@ -3,8 +3,16 @@ guid: 7a42096e550f9494d8b374bbe92e0018
 timeCreated: 1523241238
 licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - destructionParticle: {instanceID: 0}
+  - clickParticle: {instanceID: 0}
+  - smallDrop: {fileID: 1702834890246784, guid: 4b5b7f6e54691ca41a37f3eee4d0d1d3,
+      type: 2}
+  - medDrop: {fileID: 1908089254278866, guid: 4d49033898edfcb4eb1cfdecd579f020, type: 2}
+  - largeDrop: {fileID: 1403612605846272, guid: 2cb28e83c75f1984b91cebdbfc8625fb,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

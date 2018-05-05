@@ -8,6 +8,10 @@ TagManager:
   - RootCanvas
   - Block
   - GM
+  - sDrop
+  - mDrop
+  - lDrop
+  - DropText
   layers:
   - Default
   - TransparentFX
