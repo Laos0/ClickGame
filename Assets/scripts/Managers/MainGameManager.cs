@@ -40,6 +40,8 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     void Start()
     {
+        // When game starts currency adds
+        startCurrencyCounter();
         instBlock = Resources.Load("Block", typeof(Block)) as Block;
         genGrid();
     }
@@ -82,11 +84,10 @@ public class MainGameManager : Singleton<MainGameManager> {
     {
         while(isGameStart)
         {
-            if(currentBlock != null)
-            {
-                currentBlock.hit();
-                yield return new WaitForSeconds(1);
-            }
+            addToCurrency(1);
+            //Debug.Log(this.currency);
+            yield return new WaitForSeconds(1);
+        
         }
     }
 

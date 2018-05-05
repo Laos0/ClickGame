@@ -27,7 +27,7 @@ public class Block : MonoBehaviour
 	public bool hasNotDropped;
 	//public Text dropText; Will Fix
 
-    private ParticleSystem clickEffect;
+   // private ParticleSystem clickEffect;
 
     void Start()
     {
@@ -120,7 +120,8 @@ public class Block : MonoBehaviour
     {
         if (isClick)
         {
-            if (!isClickParticleExist)
+            // Not needed for now
+           /* if (!isClickParticleExist)
             {
                 clickEffect = Instantiate(clickParticle, new Vector3(), gameObject.transform.rotation).GetComponent<ParticleSystem>();
                 clickEffect.transform.parent = gameObject.transform;
@@ -133,6 +134,7 @@ public class Block : MonoBehaviour
                     clickEffect.Play();
                 }
             }
+            */
 
             if (!selected)
             {
@@ -154,7 +156,10 @@ public class Block : MonoBehaviour
     public void hit()
     {
         clicksNeeded -= 1 * (int)this.multiplier;
-        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(1 * (int)this.multiplier);
+        if (MainGameManager.Instance != null)
+        {
+            MainGameManager.Instance.addToCurrency(1 * (int)this.multiplier);
+        }
     }
 
     public void setReward()
