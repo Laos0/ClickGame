@@ -30,6 +30,7 @@ public class MainGameManager : Singleton<MainGameManager> {
     /// Keepe track of the current block destroyed
     /// </summary>
     public int countBlock;
+	public Text dropText;
 
 
     void Awake()
@@ -252,6 +253,27 @@ public class MainGameManager : Singleton<MainGameManager> {
 
         return 0;
     }
+
+	//set drop text
+	public void updateDropText(string dropSize)
+	{
+		if (dropSize == "small")
+		{
+			dropText.text = "Random Drop: Small Gem: + 50!";
+		}
+		else if (dropSize == "med")
+		{
+			dropText.text = "Random Drop: Medium Gem: + 100!";
+		}
+		else if (dropSize == "large")
+		{
+			dropText.text = "Random Drop: Large Gem: +200!";
+		}
+		else if (dropSize == "nothing")
+		{
+			dropText.text = "Random Drop: Nothing.";
+		}
+	}
 }
 
 

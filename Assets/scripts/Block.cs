@@ -23,7 +23,6 @@ public class Block : MonoBehaviour
 	public GameObject destructionParticle,
 					  clickParticle;
 
-	public GameObject smallDrop, medDrop, largeDrop;
 	public bool hasNotDropped;
 	//public Text dropText; Will Fix
 
@@ -35,9 +34,6 @@ public class Block : MonoBehaviour
         clicksNeeded = 5;
         selected = false;
         destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
-		smallDrop = GameObject.FindGameObjectWithTag("sDrop");
-		medDrop = GameObject.FindGameObjectWithTag("mDrop");
-		largeDrop = GameObject.FindGameObjectWithTag("lDrop");
 		hasNotDropped = true;
     }
 	// Update is called once per frame
@@ -199,36 +195,30 @@ public class Block : MonoBehaviour
 			int spawnChance = Random.Range(0, 100);
 
 
-			//Check if something spawns
-			if (spawnChance >= 0 && spawnChance < 30)
-			{
-				//Spawn small reward
-					//Instantiate(smallDrop, transform.position, transform.rotation);
-				Debug.Log("You got a small Gem: + 50 points");
+		//Check if something spawns
+		if (spawnChance >= 0 && spawnChance < 30)
+		{
+			Debug.Log("You got a small Gem: + 50 points");
 			MainGameManager.Instance.addToCurrency(50);
+			MainGameManager.Instance.updateDropText("small");
 
-				//dropText.text = "Random Drop: Small Gem: + 50!";
-
-			}
-			if (spawnChance >= 30 && spawnChance < 45)
-			{
-				//spawn medium reward
-					//Instantiate(medDrop, transform.position, transform.rotation);
-				Debug.Log("You got a medium Gem: + 100 points");
-				MainGameManager.Instance.addToCurrency(100);
-				//dropText.text = "Random Drop: Medium Gem: + 100!";
 		}
-			if (spawnChance >= 45 && spawnChance < 50)
-			{
-				//spawn large reward
-					//Instantiate(largeDrop, transform.position, transform.rotation);
-				Debug.Log("You got a large Gem: + 200 points");
-				MainGameManager.Instance.addToCurrency(200);
-				//dropText.text = "Random Drop: Large Gem: + 200!";
-			if(spawnChance >= 50)
-			{
-				//dropText.text = "Nothing";
-			}
+		else if (spawnChance >= 30 && spawnChance < 45)
+		{
+			Debug.Log("You got a medium Gem: + 100 points");
+			MainGameManager.Instance.addToCurrency(100);
+			MainGameManager.Instance.updateDropText("med");
 		}
+		else if (spawnChance >= 45 && spawnChance < 50)
+		{
+			Debug.Log("You got a large Gem: + 200 points");
+			MainGameManager.Instance.addToCurrency(200);
+			MainGameManager.Instance.updateDropText("large");
+		}
+		else
+		{
+			MainGameManager.Instance.updateDropText("nothing");
+		}
+		
 	}
 }
