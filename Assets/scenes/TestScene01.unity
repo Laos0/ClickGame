@@ -2205,6 +2205,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 777681964}
+        m_MethodName: playButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &713995061
@@ -4618,6 +4629,17 @@ MonoBehaviour:
           m_StringArgument: OnMouseDown
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 777681964}
+        m_MethodName: playButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1704621126
@@ -5631,6 +5653,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1236942961}
     m_Modifications:
+    - target: {fileID: 114880424879499862, guid: 9711c365e1a3be148bbca87f7de65d40,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224339492701254060, guid: 9711c365e1a3be148bbca87f7de65d40,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -5743,6 +5770,31 @@ Prefab:
 
 
         Send us an e-mail describing it at: clickbug@email.com'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114880424879499862, guid: 9711c365e1a3be148bbca87f7de65d40,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114880424879499862, guid: 9711c365e1a3be148bbca87f7de65d40,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114880424879499862, guid: 9711c365e1a3be148bbca87f7de65d40,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 777681964}
+    - target: {fileID: 114880424879499862, guid: 9711c365e1a3be148bbca87f7de65d40,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: playButtonClickSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 114880424879499862, guid: 9711c365e1a3be148bbca87f7de65d40,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9711c365e1a3be148bbca87f7de65d40, type: 2}
