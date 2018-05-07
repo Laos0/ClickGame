@@ -125,7 +125,16 @@ public class ConfigManager {
     // Return the currency value
     public static float getCurrency() { return config["Statistics"]["Currency"].FloatValue; }
 
-    public static float getTime() { return config["Statistics"]["Time"].FloatValue; }
+    public static float getTime() {
+        // Get the current time
+        float timeAsSeconds = 0.0f;
+        timeAsSeconds += System.DateTime.Now.Second;
+        timeAsSeconds += System.DateTime.Now.Minute * 60;
+        timeAsSeconds += System.DateTime.Now.Hour * 60 * 60;
+        timeAsSeconds += System.DateTime.Now.DayOfYear * 60 * 60 * 24;
+
+        return config["Statistics"]["Time"].FloatValue - timeAsSeconds;
+    }
 
     // return the config file
     public static Configuration getConfig()
