@@ -32,7 +32,7 @@ public class Block : MonoBehaviour
     void Start()
     {
         //litUp = Color.magenta;
-        clicksNeeded = 5;
+        clicksNeeded = Random.Range(5, 30);
         selected = false;
         multiplier = 1;
         destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";

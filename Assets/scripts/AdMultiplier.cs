@@ -18,7 +18,9 @@ public class AdMultiplier : MonoBehaviour {
             {
                 timerActive = false;
                 timer = 30;
+                MainGameManager.Instance.currentBlock.multiplier--;
                 StopAllCoroutines();
+
             }
         }
     }
@@ -26,7 +28,6 @@ public class AdMultiplier : MonoBehaviour {
     void activateMultiplier()
     {
         timerActive = true;
-        MainGameManager.Instance.currentBlock.multiplier = 2;
         StartCoroutine(activeTimer());
     }
 
@@ -36,6 +37,7 @@ public class AdMultiplier : MonoBehaviour {
         {
             timer--;
             timerText.text = timer.ToString();
+            MainGameManager.Instance.currentBlock.multiplier++;
             yield return new WaitForSeconds(1);
 
             if(timer == 0)

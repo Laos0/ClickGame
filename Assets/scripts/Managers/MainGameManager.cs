@@ -44,6 +44,7 @@ public class MainGameManager : Singleton<MainGameManager> {
     /// </summary>
     public int countBlock;
 	public Text dropText;
+ 
 
 
     void Awake()
@@ -54,6 +55,7 @@ public class MainGameManager : Singleton<MainGameManager> {
             created = true;
             Debug.Log("Awake: " + this.gameObject);
 
+            
         }
     }
 
