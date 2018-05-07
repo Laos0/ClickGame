@@ -12,6 +12,7 @@ TagManager:
   - mDrop
   - lDrop
   - DropText
+  - Shop
   layers:
   - Default
   - TransparentFX

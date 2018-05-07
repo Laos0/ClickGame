@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SaveGameButton : MonoBehaviour {
 
+    public GameObject mShop;
+    public GameObject mMGM;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -18,6 +21,6 @@ public class SaveGameButton : MonoBehaviour {
     public void saveGame()
     {
         // Save the game
-        ConfigManager.saveFile();
+        ConfigManager.saveFile(mShop.GetComponent<Shop>(), mMGM.GetComponent<MainGameManager>());
     }
 }
