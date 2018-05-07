@@ -31,9 +31,10 @@ public class Block : MonoBehaviour
 
     void Start()
     {
-        litUp = Color.magenta;
-        clicksNeeded = 5;
+        //litUp = Color.magenta;
+        clicksNeeded = Random.Range(5, 30);
         selected = false;
+        multiplier = 1;
         destructionParticle.GetComponent<Renderer>().sortingLayerName = "Foreground";
 		hasNotDropped = true;
     }
@@ -44,18 +45,16 @@ public class Block : MonoBehaviour
         {
 			if(hasNotDropped)
 			{
-				getRandomReward();
+                destroyBlock();
+                getRandomReward();
 				hasNotDropped = false;
 			}
-            destroyBlock();
         }
-
-        if (selected)
+        
+        if(selected)
         {
-            if (!gameObject.GetComponent<Outline>().enabled)
-            {
-                enableOutline();
-            }
+            enableOutline();
+            MainGameManager.Instance.playerLocation = getLocation();
         }
         else
         {
@@ -65,8 +64,11 @@ public class Block : MonoBehaviour
 
     void destroyBlock()
     {
-        GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
+        //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().grid.RemoveAt(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlockIndex(GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getBlock(new Vector2(xCord, yCord))));
+        MainGameManager.Instance.grid.RemoveAt(MainGameManager.Instance.grid.IndexOf(MainGameManager.Instance.currentBlock));
         GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(reward);
+        Block tmp = MainGameManager.Instance.currentBlock;
+        MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock(tmp);
 
         selected = false;
 
@@ -76,8 +78,8 @@ public class Block : MonoBehaviour
             MainGameManager.Instance.addToCurrency(this.reward);
 
             //GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().getNextBlock();
-            MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock();
-
+            //MainGameManager.Instance.currentBlock = MainGameManager.Instance.getNextBlock();
+            //MainGameManager.Instance.getSurrondingBlocks();
             // When the blocks are destroyed, particle will spawn at their location and a sound will be played.
 
 
@@ -94,8 +96,8 @@ public class Block : MonoBehaviour
 
     void enableOutline()
     {
-        this.GetComponent<Outline>().enabled = true;
-        this.GetComponent<Renderer>().material.color = color;
+        gameObject.GetComponent<Outline>().enabled = true;
+        gameObject.GetComponent<Renderer>().material.color = color;
     }
 
     void disableOutline()
@@ -137,6 +139,8 @@ public class Block : MonoBehaviour
             if (!selected)
             {
                 selected = true;
+                MainGameManager.Instance.playerLocation = getLocation();
+                MainGameManager.Instance.currentBlock = this;
                 GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().currentBlock = this;
             }
             else
@@ -162,11 +166,11 @@ public class Block : MonoBehaviour
 
     public void setReward()
     {
-        if (color == Color.green) { reward = 50; }
-        else if (color == Color.blue) { reward = 75; }
-        else if (color == Color.red) { reward = 150; }
-        else if (color == Color.gray) { reward = 200; }
-        else if (color == Color.magenta) { reward = 300; }
+        if (color == new Color32(49, 130, 189, 255)) { reward = 50; }
+        else if (color == new Color32(254, 178, 76, 255)) { reward = 75; }
+        else if (color == new Color32(189, 0, 38, 255)) { reward = 150; }
+        else if (color == new Color32(37, 37, 37, 255)) { reward = 200; }
+        else if (color == new Color32(0, 109, 44, 255)) { reward = 300; }
         else { reward = 50; }
     }
 
