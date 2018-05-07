@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopItemButton : MonoBehaviour {
 
     // Reference to the shop
-    Shop shop;
+    public Shop shop;
 
     // ID for this button
     int ID;

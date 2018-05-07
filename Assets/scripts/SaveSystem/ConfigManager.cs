@@ -27,6 +27,7 @@ public class ConfigManager {
             config["Statistics"]["Points"].FloatValue = 0;
             config["Statistics"]["Shop Value"].FloatValue = 0;
             config["Statistics"]["Items Unlocked"].IntValue = 1;
+            config["Statistics"]["Click Value"].IntValue = 1;
 
             // Items Owned
             config["Items Owned"]["Item0"].IntValue = 0;
@@ -35,8 +36,6 @@ public class ConfigManager {
 
             // Prestige Value
             config["Prestige"]["Value"].FloatValue = 0.0f;
-
-            saveFile();
         }
         else
         {
@@ -47,13 +46,22 @@ public class ConfigManager {
     }
 
     // Saves the config file
-    public static void saveFile()
+    public static void saveFile(Shop mShop, MainGameManager mGM)
     {
-        // Get a reference to the shop object
-        Shop mShop = GameObject.FindWithTag("Shop").GetComponent<Shop>();
 
-        // Get a reference to the game manager
-        MainGameManager mGM = GameObject.FindWithTag("GM").GetComponent<MainGameManager>();
+        // Save the current time
+        float timeAsSeconds = 0.0f;
+        timeAsSeconds += System.DateTime.Now.Second;
+        timeAsSeconds += System.DateTime.Now.Minute * 60;
+        timeAsSeconds += System.DateTime.Now.Hour * 60 * 60;
+        timeAsSeconds += System.DateTime.Now.DayOfYear * 60 * 60 * 24;
+
+        // Save the time in seconds as a float value
+        // Because sharpconfig can't save DateTime values, we need to convert it to a float
+        config["Statistics"]["Time"].FloatValue = timeAsSeconds;
+        
+        // Save the block grid
+        // BlockSaver.saveGrid(mGM.grid);
 
         // Save the items owned by the player
         for (int i = 0; i < 3; i++)
@@ -63,12 +71,15 @@ public class ConfigManager {
         }
 
         // Save the net value of the shop
-        config["Statistics"]["Shop Value"].FloatValue = mShop.getShopValue();
+        config["Statistics"]["Shop Value"].FloatValue = (float)mShop.getShopValue();
 
         // Save the number of items the player has unlocked
         config["Statistics"]["Items Unlocked"].IntValue = mShop.getItemsUnlocked();
 
         config["Statistics"]["Points"].FloatValue = mGM.currency;
+
+        // Save the click value
+        config["Statistics"]["Click Value"].IntValue = MainGameManager.clickValue;
 
 
 
@@ -111,6 +122,23 @@ public class ConfigManager {
         }   
     }
 
+    // Return the currency value
     public static float getCurrency() { return config["Statistics"]["Currency"].FloatValue; }
 
+    public static float getTime() {
+        // Get the current time
+        float timeAsSeconds = 0.0f;
+        timeAsSeconds += System.DateTime.Now.Second;
+        timeAsSeconds += System.DateTime.Now.Minute * 60;
+        timeAsSeconds += System.DateTime.Now.Hour * 60 * 60;
+        timeAsSeconds += System.DateTime.Now.DayOfYear * 60 * 60 * 24;
+
+        return config["Statistics"]["Time"].FloatValue - timeAsSeconds;
+    }
+
+    // return the config file
+    public static Configuration getConfig()
+    {
+        return config;
+    }
 }

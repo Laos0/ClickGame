@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Block : MonoBehaviour
 {
     public float reward,
@@ -144,7 +145,7 @@ public class Block : MonoBehaviour
             }
             else
             {
-                this.clicksNeeded--;
+                this.clicksNeeded -= MainGameManager.clickValue;
                 GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().addToCurrency(1 * (int)this.multiplier);
             }
         }

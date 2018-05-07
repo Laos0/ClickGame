@@ -13,6 +13,12 @@ public class MainGameManager : Singleton<MainGameManager> {
                       genStart,
                       genNext;
 
+    // Amount of clicks that one click of the mouse is worth
+    public static int clickValue;
+    public static float clickUpgradeRate = 5.0f;
+    public static float costToUpgradeClick = 300f;
+    public static float clickCostIncreaseRate = 7.0f;
+
     public Text scoreTxt;
     public float currency;
     public bool isGameStart,
@@ -53,6 +59,8 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     void Start()
     {
+        clickValue = 1;
+
         countBlock = 0;
         // When game starts currency adds
         startCurrencyCounter();
@@ -149,6 +157,7 @@ public class MainGameManager : Singleton<MainGameManager> {
 
     private void genGrid()
     {
+
         int row = 0,
             col = 0;
 

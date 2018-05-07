@@ -19,7 +19,7 @@ public class Shop : MonoBehaviour {
     public List<UnityEngine.UI.Button> ShopItemButtons = new List<UnityEngine.UI.Button>();
 
     // The total number of clicks that occur per tick
-    int autoclickValue;
+    float autoclickValue;
 
     // The number of shop items the player has unlocked
     // Not sure if I'm gonna use this or some other method, so just wait
@@ -57,37 +57,13 @@ public class Shop : MonoBehaviour {
         newButtonY_change = ShopItemButtons[0].GetComponent<RectTransform>().rect.height * 1.5f;
         newButtonY = ShopItemButtons[0].transform.position.y - newButtonY_change;
 
-        shopValue = ConfigManager.getShopValue();
-        MGM.currency = ConfigManager.getCurrency();
-
-        // Load the file
-        for (int i = 1; i < ConfigManager.getItems(); i++)
-        {
-            // Instantiate a new Button
-            GameObject newButton = Instantiate(Resources.Load<GameObject>(ShopItems[i].getName()));
-            ShopItemButtons.Add(newButton.GetComponent<UnityEngine.UI.Button>());
-
-            // Set the new button to be a child of this button
-            newButton.transform.SetParent(this.gameObject.transform);
-
-            newButton.transform.position = new Vector2(newButtonX, newButtonY);
-            newButtonY -= newButtonY_change;
-            newButton.GetComponent<ShopItemButton>().initialize(this, i);
-
-
-            // Set the number of items owned based on the stored value
-            for (int j = 0; j < ConfigManager.getItemsOwned(i); j++)
-            {
-                ShopItems[i].purchase();
-            }
-
-            updateButtonText(i);
-        }
+        // Load the game data from the file
+        loadGame(ConfigManager.getConfig());
     }
 	
 	// Update is called once per frame
 	void Update () {
-		// ShopItemButtons.Count is the number of items the player has already found
+        // ShopItemButtons.Count is the number of items the player has already found
 
         // Loop through every shop item that hasn't been added to the shop yet
         for (int i = ShopItemButtons.Count; i < ShopItems.Count; i++)
@@ -140,6 +116,8 @@ public class Shop : MonoBehaviour {
     //          By making each buy______ a separate function, I don't need to memorize which item is associated with which index
     public void buyItem(int index)
     {
+
+        updateButtonText(index);
         // Check whether the player can afford this item
         if (MGM.getCurrency() >= ShopItems[index].getPrice())
         {
@@ -153,9 +131,6 @@ public class Shop : MonoBehaviour {
 
             // Call the shopItem's purchase function (for bookkeeping)
             ShopItems[index].purchase();
-
-            // Update the autominer's shop button
-            updateButtonText(index);
 
             Debug.Log("Bought One");
         }
@@ -218,4 +193,68 @@ public class Shop : MonoBehaviour {
         return itemsUnlocked;
     }
 
+
+    // Load the game data from the given config file
+    public void loadGame(Configuration config)
+    {
+        MainGameManager.clickValue = config["Statistics"]["Click Value"].IntValue;
+        Debug.Log("MainGameManager.clickValue");
+
+        // Load the currency
+        MGM.addToCurrency(config["Statistics"]["Points"].FloatValue);
+
+        // Load the shop value
+        shopValue = config["Statistics"]["Shop Value"].FloatValue;
+
+        // Buy the number of autominer's the player should have
+        for (int j = 0; j < config["Items Owned"]["Item0"].IntValue; j++)
+        {
+
+            Debug.Log("Bought");
+            // Increase the autoclicker value
+            autoclickValue += ShopItems[0].getClicks();
+
+            // Call the shopItem's purchase function (for bookkeeping)
+            ShopItems[0].purchase();
+        }
+
+        updateButtonText(0);
+
+        // Load the shop data
+        for (int i = 1; i <= config["Statistics"]["Items Unlocked"].IntValue; i++)
+        {   
+            Debug.Log(ShopItems[i].getName());
+            // Instantiate a new Button
+            GameObject newButton = Instantiate(Resources.Load<GameObject>(ShopItems[i].getName()));
+            ShopItemButtons.Add(newButton.GetComponent<UnityEngine.UI.Button>());
+
+            // Set the new button to be a child of this button
+            newButton.transform.SetParent(this.gameObject.transform);
+
+            // Set this button's position
+            newButton.transform.position = new Vector2(newButtonX, newButtonY);
+            newButtonY -= newButtonY_change;
+            newButton.GetComponent<ShopItemButton>().initialize(this, i);
+
+            // Buy the number of items that this item should have
+            for (int j = 0; j < config["Items Owned"]["Item" + i].IntValue; j++)
+            {
+
+                Debug.Log("Bought");
+                // Increase the autoclicker value
+                autoclickValue += ShopItems[i].getClicks();
+
+                // Call the shopItem's purchase function (for bookkeeping)
+                ShopItems[i].purchase();
+            }
+
+            // Bookkeeping
+            itemsUnlocked++;
+            updateButtonText(i);
+        }
+
+
+        // Calculate the amount of currency earned since the game was saved
+
+    }
 }
