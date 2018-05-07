@@ -125,6 +125,7 @@ public class ConfigManager {
     // Return the currency value
     public static float getCurrency() { return config["Statistics"]["Currency"].FloatValue; }
 
+    public static float getTime() { return config["Statistics"]["Time"].FloatValue; }
 
     // return the config file
     public static Configuration getConfig()
