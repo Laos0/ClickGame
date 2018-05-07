@@ -63,6 +63,9 @@ public class Shop : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        MGM.GetComponent<MainGameManager>().currentBlock.clicksNeeded -= getScaledClicks(Time.deltaTime);
+
+
         // ShopItemButtons.Count is the number of items the player has already found
 
         // Loop through every shop item that hasn't been added to the shop yet
@@ -116,8 +119,6 @@ public class Shop : MonoBehaviour {
     //          By making each buy______ a separate function, I don't need to memorize which item is associated with which index
     public void buyItem(int index)
     {
-
-        updateButtonText(index);
         // Check whether the player can afford this item
         if (MGM.getCurrency() >= ShopItems[index].getPrice())
         {
@@ -141,6 +142,9 @@ public class Shop : MonoBehaviour {
             // Add some sort of soud effect or visual effect to show the player that they can't afford this item
             Debug.Log("Can't afford");
         }
+
+        // Update Button Text
+        updateButtonText(index);
 
         Debug.Log("Currency: " + MGM.getCurrency().ToString());
     }
@@ -220,6 +224,11 @@ public class Shop : MonoBehaviour {
 
         updateButtonText(0);
 
+
+        if (config["Statistics"]["Items Unlocked"].IntValue == 0)
+        {
+            return;
+        }
         // Load the shop data
         for (int i = 1; i <= config["Statistics"]["Items Unlocked"].IntValue; i++)
         {   
@@ -252,9 +261,5 @@ public class Shop : MonoBehaviour {
             itemsUnlocked++;
             updateButtonText(i);
         }
-
-
-        // Calculate the amount of currency earned since the game was saved
-
     }
 }

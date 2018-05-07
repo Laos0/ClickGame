@@ -30,12 +30,12 @@ public class MainGameManager : Singleton<MainGameManager> {
     public Block currentBlock,
                  instBlock;
 
-    public Color32 color1 = new Color32(49, 130, 189, 255);
-    public Color32 color2 = new Color32(254, 178, 76, 255);
-    public Color32 color3 = new Color32(189, 0, 38, 255);
-    public Color32 color4 = new Color32(37, 37, 37, 255);
-    public Color32 color5 = new Color32(0, 109, 44, 255);
-    public Color32 color6 = new Color(247, 104, 161, 255);
+    Color32 color1 = new Color32(0, 0, 0, 255);
+    Color32 color2 = new Color32(230, 159, 0, 255);
+    Color32 color3 = new Color32(86, 180, 233, 255);
+    Color32 color4 = new Color32(0, 158, 115, 255);
+    Color32 color5 = new Color32(240, 228, 66, 255);
+    Color32 color6 = new Color(255, 255, 255, 255);
 
     public float getCurrency() { return currency; }
 
