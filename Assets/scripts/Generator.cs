@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Generator : MonoBehaviour {
-    public Block block;
+   /* public Block block;
 
     // Colorblind safe colors
     public Color32 color1 = new Color32(49, 130, 189, 255);
@@ -21,24 +21,16 @@ public class Generator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         block = Resources.Load("Block", typeof(Block)) as Block;
-        genGrid();
+        //genGrid();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Vector2 pLoc = GameObject.FindGameObjectWithTag("GM").GetComponent<MainGameManager>().playerLocation;
 
-        if (pLoc.x > 0)
+        if (pLoc.y > 4)
         {
-            if(pLoc.x %5 == 1)
-            {
-                genMore = false;
-            }
-            if (pLoc.x % 5 == 0 && !genMore)
-            {
-                Debug.Log("GENERATING");
-                genBlock();
-            }
+            //genBlock();
         }
     }
 
@@ -137,5 +129,5 @@ public class Generator : MonoBehaviour {
         // yellow red blue black and white are all pretty distinct from each other in all types of color blindness
 
         else { return Color.white; }
-    }
+    } */
 }

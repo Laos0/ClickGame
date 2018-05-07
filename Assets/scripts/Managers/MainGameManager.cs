@@ -24,6 +24,13 @@ public class MainGameManager : Singleton<MainGameManager> {
     public Block currentBlock,
                  instBlock;
 
+    public Color32 color1 = new Color32(49, 130, 189, 255);
+    public Color32 color2 = new Color32(254, 178, 76, 255);
+    public Color32 color3 = new Color32(189, 0, 38, 255);
+    public Color32 color4 = new Color32(37, 37, 37, 255);
+    public Color32 color5 = new Color32(0, 109, 44, 255);
+    public Color32 color6 = new Color(247, 104, 161, 255);
+
     public float getCurrency() { return currency; }
 
     /// <summary>
@@ -78,6 +85,7 @@ public class MainGameManager : Singleton<MainGameManager> {
                     grid[i].isClick = false;
                 }
             }
+            playerLocation = currentBlock.getLocation();
         }
     }
 
@@ -94,7 +102,10 @@ public class MainGameManager : Singleton<MainGameManager> {
             addToCurrency(1 * countBlock);
             //Debug.Log(this.currency);
             yield return new WaitForSeconds(1);
-        
+            if(currentBlock != null)
+            {
+                currentBlock.hit();
+            }
         }
     }
 
@@ -123,55 +134,17 @@ public class MainGameManager : Singleton<MainGameManager> {
         }
     }
 
-    public Block getNextBlock()
+    public Block getNextBlock(Block curBlock)
     {
-        Vector2 curPos = playerLocation;
-        if(curPos.x < 9)
+        Vector2 loc = curBlock.getLocation();
+        loc.x++;
+        if(loc.x == 10)
         {
-            curPos.x++;
+            loc.x = 0;
+            loc.y++;
         }
-
-        for(int i = 0; i < grid.Count; i++)
-        {
-            if(curPos == grid[i].getLocation())
-            {
-                grid[i].isClick = true;
-                grid[i].selected = true;
-                return grid[i];
-            }
-        }
-
-        return null;
-    }
-
-    public List<Block> getSurrondingBlocks()
-    {
-        List<Block> surroundingBlocks = new List<Block>();
-        int curX = (int)playerLocation.x;
-        int curY = (int)playerLocation.y;
-
-        if (curY == 0)
-        {
-            if(curX == 0)
-            {
-                surroundingBlocks.Add(getBlock(new Vector2(curX + 1, curY)));
-                surroundingBlocks.Add(getBlock(new Vector2(curX, curY + 1)));
-                surroundingBlocks.Add(getBlock(new Vector2(curX + 1, curY + 1)));
-            }
-            else if(curX == 9)
-            {
-                surroundingBlocks.Add(getBlock(new Vector2(curX - 1, curY)));
-                surroundingBlocks.Add(getBlock(new Vector2(curX - 1, curY + 1)));
-                surroundingBlocks.Add(getBlock(new Vector2(curX, curY + 1)));
-            }
-
-        }
-
-        for(int i = 0; i < surroundingBlocks.Count; i++)
-        {
-            //surroundingBlocks[i].GetComponent<Renderer>().material.color = surroundingBlocks[i].lightUp;
-        }
-        return surroundingBlocks;
+        getBlock(loc).selected = true;
+        return getBlock(loc);
     }
 
     private void genGrid()
@@ -220,38 +193,46 @@ public class MainGameManager : Singleton<MainGameManager> {
     Color getRandomColor()
     {
         int color = Random.Range(-1, 101);
+        // Debug.Log(color);
 
-        if (color <= 40) { return Color.green; }
-        else if (color > 40 && color < 60) { return Color.blue; }
-        else if (color > 60 && color < 80) { return Color.red; }
-        else if (color > 80 && color < 95) { return Color.gray; }
-        else if (color >= 95) { return Color.magenta; }
+        if (color <= 20) { return color1; }
+        else if (color > 20 && color < 40) { return color2; }
+        else if (color > 40 && color < 60) { return color3; }
+        else if (color > 60 && color < 80) { return color4; }
+        else if (color > 80 && color < 90) { return color5; }
+        else if (color >= 90) { return color6; }
+
+        // yellow red blue black and white are all pretty distinct from each other in all types of color blindness
+
         else { return Color.white; }
     }
 
     public Block getBlock(Vector2 location)
     {
+        int index = 0;
         for(int i = 0; i < grid.Count; i++)
         {
             if(grid[i].getLocation() == location)
             {
-                return grid[i];
+                index = i;
             }
         }
-        return null;
+        return grid[index];
     }
 
-    public int getBlockIndex(Block block)
+    public int getBlockIndex(Vector2 loc)
     {
+        int index = 0;
         for (int i = 0; i < grid.Count; i++)
         {
-            if(grid[i] == block)
+            if(grid[i].getLocation() == loc)
             {
-                return i;
+                index =  i;
+                Debug.Log("THIS  " + index);
             }
         }
 
-        return 0;
+        return index;
     }
 
 	//set drop text
