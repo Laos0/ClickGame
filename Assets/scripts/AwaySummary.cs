@@ -41,9 +41,10 @@ public class AwaySummary : MonoBehaviour {
                 blocks.Add(MainGameManager.Instance.grid[i].getLocation());
             }
         }
-
-        blocksDestroyed.text = blocks.Count.ToString();
+        float bd = blocks.Count - Random.Range(20, 54);
+        float gs = 12 + Random.Range(10, 20);
+        blocksDestroyed.text = bd.ToString();
         goldEarned.text = ticks.ToString();
-        gemsFound.text = "12";
+        gemsFound.text = gs.ToString();
     }
 }
